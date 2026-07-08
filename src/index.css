@@ -1,0 +1,115 @@
+@font-face {
+  font-family: "DogicaPixel";
+  src: url("../src/fonts/dogicapixel.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DogicaPixelBold";
+  src: url("../src/fonts/dogicapixelbold.ttf") format("truetype");
+}
+
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth;}
+
+body {
+  background-color: var(--color-custom-black);
+  background-repeat: repeat;
+  /* background-blend-mode:exclusion; */
+  /* background-blend-mode: screen; */
+  background-size: 500px 500px;
+  font-family: var(--font-DogicaPixel);
+}
+
+
+@theme {
+  --font-DogicaPixel: "DogicaPixel", sans-serif;
+  --font-DogicaPixelBold: "DogicaPixelBold", sans-serif;
+  --breakpoint-xs: 20rem;
+  --color-Primary: #778873;
+  --color-Secondary: #F1DEC4;
+  --color-Secondary-Dark: #d8c7b0;
+  --color-Tertiary: #BD4444;
+  --color-custom-black: #0F0E0E;
+  --color-custom-gray: #686D76;
+
+  --animate-idle: idle 1s step-end infinite ;
+  @keyframes idle {
+    0% {
+      transform: translateY(-2px);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-2px);
+    }
+  }
+
+  --animate-popUp: popUp 0.5s ease-in-out;
+  @keyframes popUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    80% {
+      opacity: 1;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+}
+
+/* Mobile */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Desktop */
+@media screen and (min-width: 50rem) {
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-height: 50rem) and (max-width: 64rem) {
+  .hiddenLandscapePhone {
+    display: none;
+  }
+}
+
+/* Track */
+.scrollbar-contents::-webkit-scrollbar-track {
+  border: 0px
+}
+::-webkit-scrollbar-track {
+  background: var(--color-Secondary-2);
+  border-left: 3px solid var(--color-Primary-4);
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background: var(--color-Primary-2);
+  border-left: 3px solid var(--color-Primary-4);
+  border-top: 3px solid var(--color-Primary-4);
+  border-bottom: 3px solid var(--color-Primary-4);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+/* Click */
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-Primary-3);
+}
+
+.shadowCorner{
+  box-shadow: inset 3px 3px 0 #ffffff70, inset -4px -4px 0 #00000045;
+}
