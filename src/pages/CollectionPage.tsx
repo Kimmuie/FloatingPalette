@@ -57,7 +57,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
         </div>
         <div className="grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 grid-cols-1 gap-2 w-full">
             {paletteList.map((palette, index) => (
-              <PixelOutline key={index} className="h-full flex flex-col justify-between gap-2 bg-Primary rounded-[2px] [corner-shape:notch] shadowCorner border-2 border-custom-black p-2">
+              <PixelOutline key={index} className="h-full flex flex-col justify-between gap-2 bg-Quaternary rounded-[2px] [corner-shape:notch] shadowCorner border-2 border-custom-black p-2">
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-row items-center justify-between gap-2">
                     {editingIndex === index ? (
@@ -95,7 +95,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
                   <div className="grid grid-cols-7 items-center gap-2">
                     {palette.colors.map((color, colorIndex) => (
                         <PixelOutline
-                          className="w-full h-6 border-2 border-custom-black rounded-[2px] [corner-shape:notch]"
+                          className="min-w-6 w-full h-6 border-2 border-custom-black rounded-[2px] [corner-shape:notch]"
                           style={{ backgroundColor: color.hexValue }}
                           key={colorIndex}
                         />

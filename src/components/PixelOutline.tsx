@@ -1,11 +1,13 @@
 type PixelOutlineProps = {
   as?: React.ElementType;
   className?: string;
+  children?: React.ReactNode;
 } & React.ComponentPropsWithoutRef<any>;
 
 export default function PixelOutline({
     as: Component = "div",
     className = "",
+    children,
     ...props
     }: PixelOutlineProps) {
 
@@ -17,6 +19,7 @@ export default function PixelOutline({
         className={`relative ${className}`}
         {...props}
       >
+        {children}
       </Component>
     </div>
   );

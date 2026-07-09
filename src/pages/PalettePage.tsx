@@ -1,16 +1,101 @@
 import type { Palette } from "../components/types";
+import type { Dispatch, SetStateAction } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PixelOutline from "../components/PixelOutline";
+import ColorForm from "../components/ColorForm";
+import { useRef, useState } from "react";
 
-  interface PalettePageProps {
-    paletteList: Palette[];
-  }
-  
-export default function PalettePage({ paletteList }: PalettePageProps) {
+interface PalettePageProps {
+  paletteList: Palette[];
+  setPaletteList: Dispatch<SetStateAction<Palette[]>>;
+}
+
+export default function PalettePage({ paletteList, setPaletteList }: PalettePageProps) {
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [selectMode, setSelectMode] = useState(false);
+  const [addColor, setAddColor] = useState(false);
+  const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set());
+  const [editingColorIndex, setEditingColorIndex] = useState<number | null>(null);
+  const dragIndex = useRef<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const { paletteIndex } = useParams();
   const navigate = useNavigate();
-  const palette = paletteList[Number(paletteIndex)];
+  const index = Number(paletteIndex);
+  const palette = paletteList[index];
+
+  const updateColors = (updater: (colors: Palette["colors"]) => Palette["colors"]) => {
+    setPaletteList((prev) =>
+      prev.map((p, i) => (i === index ? { ...p, colors: updater(p.colors) } : p))
+    );
+  };
+
+  const handleCopyColor = (hex: string, colorIndex: number) => {
+    navigator.clipboard.writeText(hex);
+    setCopiedIndex(colorIndex);
+    setTimeout(() => setCopiedIndex((cur) => (cur === colorIndex ? null : cur)), 1200);
+  };
+
+  const toggleSelectMode = () => {
+    setSelectMode((prev) => !prev);
+    setSelectedIndices(new Set());
+  };
+
+  const toggleSelectColor = (colorIndex: number) => {
+    setSelectedIndices((prev) => {
+      const next = new Set(prev);
+      next.has(colorIndex) ? next.delete(colorIndex) : next.add(colorIndex);
+      return next;
+    });
+  };
+
+  const handleDeleteSelected = () => {
+    updateColors((colors) => colors.filter((_, i) => !selectedIndices.has(i)));
+    setSelectedIndices(new Set());
+  };
+
+  const handleEditColorConfirm = (name: string, hex: string) => {
+    if (editingColorIndex === null) return;
+    const colorIndex = editingColorIndex;
+    updateColors((colors) =>
+      colors.map((c, i) => (i === colorIndex ? { ...c, colorName: name, hexValue: hex } : c))
+    );
+    setEditingColorIndex(null);
+  };
+
+  const handleAddColorConfirm = (name: string, hex: string) => {
+    updateColors((colors) => [...colors, { colorName: name, hexValue: hex }]);
+    setAddColor(false);
+  };
+
+  const handleDragStart = (e: React.DragEvent, colorIndex: number) => {
+    dragIndex.current = colorIndex;
+    e.dataTransfer.setData("text/plain", String(colorIndex));
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent, colorIndex: number) => {
+    e.preventDefault();
+    setDragOverIndex(colorIndex);
+  };
+
+  const handleDrop = (e: React.DragEvent, dropIndex: number) => {
+    e.preventDefault();
+    const from = dragIndex.current;
+    if (from === null || from === dropIndex) {
+      dragIndex.current = null;
+      setDragOverIndex(null);
+      return;
+    }
+    updateColors((colors) => {
+      const next = [...colors];
+      const [moved] = next.splice(from, 1);
+      next.splice(dropIndex, 0, moved);
+      return next;
+    });
+    dragIndex.current = null;
+    setDragOverIndex(null);
+  };
 
   if (!palette) {
     return (
@@ -40,53 +125,102 @@ export default function PalettePage({ paletteList }: PalettePageProps) {
           <PixelOutline
             as="button"
             className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3"
-            onClick={() => navigate("/")}>
-            Edit
+            onClick={toggleSelectMode}>
+            {selectMode ? "Done" : "Edit"}
           </PixelOutline>
         </div>
 
         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3">
-          {palette.colors.map((color, colorIndex) => (
-            <PixelOutline
-              key={colorIndex}
-              className="flex flex-col items-center gap-1 bg-Primary p-2 rounded-[2px] border-2 [corner-shape:notch] border-custom-black shadowCorner"
-            >
+          {palette.colors.map((color, colorIndex) => {
+            const isSelected = selectedIndices.has(colorIndex);
+            return (
               <PixelOutline
-                className="w-12 h-12 border-2 border-custom-black rounded-[2px] [corner-shape:notch]"
-                style={{ backgroundColor: color.hexValue }}
-              />
-              <span className="text-xs">{color.colorName}</span>
-              <span className="text-xs opacity-70">{color.hexValue}</span>
-            </PixelOutline>
-          ))}
+                as="div"
+                role="button"
+                tabIndex={0}
+                draggable
+                onDragStart={(e) => handleDragStart(e, colorIndex)}
+                onDragOver={(e) => handleDragOver(e, colorIndex)}
+                onDrop={(e) => handleDrop(e, colorIndex)}
+                onClick={() =>
+                  selectMode ? toggleSelectColor(colorIndex) : handleCopyColor(color.hexValue, colorIndex)
+                }
+                key={colorIndex}
+                className={` hover:-translate-y-0.5 active:translate-y-0.5 flex flex-col w-full items-center gap-1 p-2 rounded-[2px] border-2 [corner-shape:notch] border-custom-black shadowCorner transition-colors
+                  ${isSelected ? "bg-Tertiary" : "bg-Quaternary"}
+                  ${selectMode ? "cursor-grab active:cursor-grabbing" : " cursor-pointer"}
+                  ${dragOverIndex === colorIndex ? "outline-1.5 outline-dashed outline-Tertiary" : ""}`}
+              >
+                <div className="flex flex-row gap-2">
+                  <PixelOutline
+                    className="w-12 h-12 border-2 border-custom-black rounded-[2px] [corner-shape:notch]"
+                    style={{ backgroundColor: color.hexValue }}
+                  />
+                  {selectMode && (
+                    <PixelOutline
+                      className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer bg-Secondary flex items-center justify-center p-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingColorIndex(colorIndex);
+                      }}>
+                      <img src="/svg/iconEdit.svg" />
+                    </PixelOutline>
+                  )}
+                </div>
+                <span className="text-xs truncate w-full text-center">{color.colorName}</span>
+                <span className="text-xs opacity-70">
+                  {copiedIndex === colorIndex ? "Copied!" : color.hexValue}
+                </span>
+              </PixelOutline>
+            );
+          })}
         </div>
       </div>
+
+      {selectMode ? (
+        <PixelOutline
+          as="button"
+          disabled={selectedIndices.size === 0}
+          className="bg-Tertiary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleDeleteSelected}>
+          Delete All
+        </PixelOutline>
+      ) : (
         <div className="grid grid-cols-2 gap-2">
           <PixelOutline
-            as="button"
-            className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full"
-            onClick={() => navigate("/")}>
+            onClick={() => setAddColor(true)}
+            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
             Add Color
           </PixelOutline>
-          <PixelOutline
-            as="button"
-            className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full"
-            onClick={() => navigate("/")}>
-             Color Picker
+          <PixelOutline as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full" onClick={() => navigate("/")}>
+            Color Picker
           </PixelOutline>
-          <PixelOutline
-            as="button"
-            className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full"
-            onClick={() => navigate("/")}>
+          <PixelOutline as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full" onClick={() => navigate("/")}>
             Shading
           </PixelOutline>
-          <PixelOutline
-            as="button"
-            className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full"
-            onClick={() => navigate("/")}>
-             Change Style
+          <PixelOutline as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full" onClick={() => navigate("/")}>
+            Change Style
           </PixelOutline>
         </div>
+      )}
+
+      {editingColorIndex !== null && (
+        <ColorForm
+          key={`edit-${editingColorIndex}`}
+          mode="edit"
+          initialName={palette.colors[editingColorIndex].colorName}
+          initialHex={palette.colors[editingColorIndex].hexValue}
+          onConfirm={handleEditColorConfirm}
+          onCancel={() => setEditingColorIndex(null)}
+        />
+      )}
+      {addColor && (
+        <ColorForm
+          mode="add"
+          onConfirm={handleAddColorConfirm}
+          onCancel={() => setAddColor(false)}
+        />
+      )}
     </div>
   );
 }

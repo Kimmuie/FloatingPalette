@@ -12,6 +12,7 @@
   "app": {
     "windows": [
       {
+        "dragDropEnabled": false,
         "title": "FloatingPallete",
         "decorations": false,
         "resizable": true,

@@ -19,7 +19,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<CollectionPage paletteList={paletteList} setPaletteList={setPaletteList} />} />
-          <Route path="/palettes/:paletteIndex" element={<PalettePage paletteList={paletteList} />} />
+          <Route path="/palettes/:paletteIndex" element={<PalettePage paletteList={paletteList} setPaletteList={setPaletteList}/>} />
         </Routes>
       </Router>
     </div>
