@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PixelOutline from "../components/PixelOutline";
 import ColorForm from "../components/ColorForm";
+import ShadingForm from "../components/ShadingForm";
 import { useRef, useState } from "react";
 
 interface PalettePageProps {
@@ -14,8 +15,11 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [selectMode, setSelectMode] = useState(false);
   const [addColor, setAddColor] = useState(false);
+  const [colorPick, setColorPick] = useState(false);
+  const [colorShading, setColorShading] = useState(false)
   const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set());
   const [editingColorIndex, setEditingColorIndex] = useState<number | null>(null);
+  const [selectShadingIndex, setSelectShadingIndex] = useState<number | null>(null);
   const dragIndex = useRef<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
@@ -31,6 +35,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   };
 
   const handleCopyColor = (hex: string, colorIndex: number) => {
+    if(colorShading) return;
     navigator.clipboard.writeText(hex);
     setCopiedIndex(colorIndex);
     setTimeout(() => setCopiedIndex((cur) => (cur === colorIndex ? null : cur)), 1200);
@@ -39,6 +44,16 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   const toggleSelectMode = () => {
     setSelectMode((prev) => !prev);
     setSelectedIndices(new Set());
+  };
+
+  const toggleColorShading = () => {
+    setColorShading((prev) => !prev);
+    setSelectedIndices(new Set());
+  };
+
+  const handleAddShadingColors = (colors: Palette["colors"]) => {
+    updateColors((cs) => [...cs, ...colors]);
+    setSelectShadingIndex(null);
   };
 
   const toggleSelectColor = (colorIndex: number) => {
@@ -66,6 +81,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   const handleAddColorConfirm = (name: string, hex: string) => {
     updateColors((colors) => [...colors, { colorName: name, hexValue: hex }]);
     setAddColor(false);
+    setColorPick(false);
   };
 
   const handleDragStart = (e: React.DragEvent, colorIndex: number) => {
@@ -114,20 +130,24 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   return (
     <div className="px-2 py-2 bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] h-full flex flex-col gap-2 justify-between">
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
+        <div className={`flex items-center ${colorShading ? "justify-center": "justify-between"}`}>
+          {!colorShading && (
           <PixelOutline
             as="button"
             className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3"
             onClick={() => navigate("/")}>
             Back
           </PixelOutline>
-          <h1 className="text-lg font-DogicaPixelBold xs:block hidden">{palette.paletteName}</h1>
+          )}
+          <h1 className={`text-lg font-DogicaPixelBold xs:block ${colorShading ? "block": "hidden"}`}>{palette.paletteName}</h1>
+          {!colorShading && (
           <PixelOutline
             as="button"
             className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3"
             onClick={toggleSelectMode}>
             {selectMode ? "Done" : "Edit"}
           </PixelOutline>
+          )}
         </div>
 
         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3">
@@ -142,13 +162,14 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
                 onDragStart={(e) => handleDragStart(e, colorIndex)}
                 onDragOver={(e) => handleDragOver(e, colorIndex)}
                 onDrop={(e) => handleDrop(e, colorIndex)}
-                onClick={() =>
-                  selectMode ? toggleSelectColor(colorIndex) : handleCopyColor(color.hexValue, colorIndex)
-                }
+                onClick={() => {
+                  selectMode ? toggleSelectColor(colorIndex) : handleCopyColor(color.hexValue, colorIndex);
+                  if (colorShading) { setSelectShadingIndex(colorIndex); }
+                }}
                 key={colorIndex}
                 className={` hover:-translate-y-0.5 active:translate-y-0.5 flex flex-col w-full items-center gap-1 p-2 rounded-[2px] border-2 [corner-shape:notch] border-custom-black shadowCorner transition-colors
                   ${isSelected ? "bg-Tertiary" : "bg-Quaternary"}
-                  ${selectMode ? "cursor-grab active:cursor-grabbing" : " cursor-pointer"}
+                  ${selectMode || colorShading ? "cursor-grab active:cursor-grabbing" : " cursor-pointer"}
                   ${dragOverIndex === colorIndex ? "outline-1.5 outline-dashed outline-Tertiary" : ""}`}
               >
                 <div className="flex flex-row gap-2">
@@ -177,7 +198,9 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
         </div>
       </div>
 
-      {selectMode ? (
+      {selectMode || colorShading ? (
+        <>
+        {selectMode && (
         <PixelOutline
           as="button"
           disabled={selectedIndices.size === 0}
@@ -185,17 +208,31 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
           onClick={handleDeleteSelected}>
           Delete All
         </PixelOutline>
+        )}
+        {colorShading && (
+        <PixelOutline
+          as="button"
+          className="bg-Tertiary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full "
+          onClick={toggleColorShading}>
+          Cancel
+        </PixelOutline>
+        )}
+        </>
       ) : (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 ">
           <PixelOutline
             onClick={() => setAddColor(true)}
             as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
             Add Color
           </PixelOutline>
-          <PixelOutline as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full" onClick={() => navigate("/")}>
+          <PixelOutline 
+            onClick={() => setColorPick(true)}
+            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
             Color Picker
           </PixelOutline>
-          <PixelOutline as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full" onClick={() => navigate("/")}>
+          <PixelOutline 
+            onClick={toggleColorShading}
+            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
             Shading
           </PixelOutline>
           <PixelOutline as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full" onClick={() => navigate("/")}>
@@ -219,6 +256,21 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
           mode="add"
           onConfirm={handleAddColorConfirm}
           onCancel={() => setAddColor(false)}
+        />
+      )}
+      {colorPick && (
+        <ColorForm
+          mode="pick"
+          onConfirm={handleAddColorConfirm}
+          onCancel={() => setColorPick(false)}
+        />
+      )}
+      {selectShadingIndex !== null && (
+        <ShadingForm
+          key={`shading-${selectShadingIndex}`}
+          selectedColor={palette.colors[selectShadingIndex]}
+          onConfirm={handleAddShadingColors}
+          onCancel={() => setSelectShadingIndex(null)}
         />
       )}
     </div>

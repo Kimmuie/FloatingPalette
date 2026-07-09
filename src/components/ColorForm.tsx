@@ -2,11 +2,12 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import ClickOutside from "./ClickOutside";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import PixelOutline from "./PixelOutline";
 
 const appWindow = getCurrentWindow();
 
 interface ColorFormProps {
-  mode: "add" | "edit";
+  mode: "add" | "edit" | "pick";
   initialName?: string;
   initialHex?: string;
   onConfirm: (name: string, hex: string) => void;
@@ -96,7 +97,13 @@ function isValidHex(hex: string) {
 const HEADER_CONFIG: Record<ColorFormProps["mode"], { icon: string; title: string; confirmLabel: string }> = {
   add: { icon: "/svg/iconAdd.svg", title: "Add Color", confirmLabel: "Add" },
   edit: { icon: "/svg/iconEdit.svg", title: "Edit Color", confirmLabel: "Done" },
+  pick: { icon: "/svg/iconAdd.svg", title: "Color Picker", confirmLabel: "Add" },
 };
+
+// Magnifier loupe constants
+const MAGNIFIER_SAMPLE = 5; // 5x5 source pixels shown
+const MAGNIFIER_ZOOM = 20; // px per source pixel
+const MAGNIFIER_SIZE = MAGNIFIER_SAMPLE * MAGNIFIER_ZOOM;
 
 // ---------------------------------------------------------------------------
 // Component
@@ -111,21 +118,37 @@ const ColorForm = ({
 }: ColorFormProps) => {
   const [name, setName] = useState(initialName);
   const [colorMode, setColorMode] = useState<ColorMode>("HEX");
-  const [dropperSupported] = useState(() => typeof window !== "undefined" && "EyeDropper" in window);
-  const [isDropping, setIsDropping] = useState(false);
-  const [hue, setHue] = useState(() => {
+
+  // Hue (0-360) + Lightness (0-100), saturation implicitly 100
+  const initialHsl = useMemo(() => {
     const { r, g, b } = hexToRgb(initialHex);
-    return rgbToHsl(r, g, b).h;
-  });
-  const [lightness, setLightness] = useState(() => {
-    const { r, g, b } = hexToRgb(initialHex);
-    return rgbToHsl(r, g, b).l;
-  });
+    return rgbToHsl(r, g, b);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const [hue, setHue] = useState(initialHsl.h);
+  const [lightness, setLightness] = useState(initialHsl.l);
 
   const hueBarRef = useRef<HTMLDivElement>(null);
   const lightBarRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef<BarKind | null>(null);
   const isFocusedRef = useRef(false);
+
+  // Native OS eyedropper (approximate — see handleEyedropper note)
+  const [dropperSupported] = useState(() => typeof window !== "undefined" && "EyeDropper" in window);
+  const [isDropping, setIsDropping] = useState(false);
+
+  // Uploaded/pasted image + pixel-exact hover magnifier
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const imageCanvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const magnifierCanvasRef = useRef<HTMLCanvasElement>(null);
+  const [magnifier, setMagnifier] = useState<{
+    screenX: number;
+    screenY: number;
+    pixelX: number;
+    pixelY: number;
+    color: string;
+  } | null>(null);
 
   const { icon, title, confirmLabel } = HEADER_CONFIG[mode];
 
@@ -150,6 +173,12 @@ const ColorForm = ({
   useEffect(() => {
     if (!isFocusedRef.current) setInputText(displayValue);
   }, [displayValue]);
+
+  const applyRgb = (r: number, g: number, b: number) => {
+    const hsl = rgbToHsl(r, g, b);
+    setHue(hsl.h);
+    setLightness(hsl.l);
+  };
 
   // ---- Slider dragging (window-level pointer listeners) ----
 
@@ -178,7 +207,6 @@ const ColorForm = ({
     window.addEventListener("pointerup", handleUp);
   };
 
-  // Cleanup in case the modal unmounts mid-drag
   useEffect(() => {
     return () => {
       draggingRef.current = null;
@@ -197,18 +225,14 @@ const ColorForm = ({
     if (colorMode === "HEX") {
       if (isValidHex(val)) {
         const { r, g, b } = hexToRgb(val);
-        const hsl = rgbToHsl(r, g, b);
-        setHue(hsl.h);
-        setLightness(hsl.l);
+        applyRgb(r, g, b);
         return;
       }
     } else if (colorMode === "RGB") {
       const parts = val.split(",").map((p) => parseFloat(p.trim()));
       if (parts.length === 3 && parts.every((n) => !isNaN(n))) {
         const [r, g, b] = parts.map((n) => Math.max(0, Math.min(255, n)));
-        const hsl = rgbToHsl(r, g, b);
-        setHue(hsl.h);
-        setLightness(hsl.l);
+        applyRgb(r, g, b);
         return;
       }
     } else {
@@ -226,19 +250,26 @@ const ColorForm = ({
     setInputText(displayValue);
   };
 
- const handleEyedropper = async () => {
+  // ---- Native OS eyedropper ----
+  // NOTE: this samples the whole screen through Chromium's own capture path,
+  // which on HDR/wide-gamut displays can return noticeably brighter/lighter
+  // values than what's actually on screen. That's a browser/OS-level
+  // tone-mapping limitation, not something fixable from here — treat this as
+  // a quick approximate pick, not a color-accurate one. For accurate values,
+  // use "Upload / Paste Image" below, which reads raw canvas pixel data.
+  const handleEyedropper = async () => {
     if (!dropperSupported || isDropping) return;
     setIsDropping(true);
     try {
       const eyeDropper = new window.EyeDropper();
       const result = await eyeDropper.open();
       const { r, g, b } = hexToRgb(result.sRGBHex);
-      const hsl = rgbToHsl(r, g, b);
-      setHue(hsl.h);
-      setLightness(hsl.l);
+      applyRgb(r, g, b);
     } catch (err) {
       console.error("Eyedropper failed:", err);
     } finally {
+      // WebView2 workaround: closing the native overlay can leave the window's
+      // hit-testing broken (clicks stop registering) until forced to recompute.
       try {
         await appWindow.setIgnoreCursorEvents(true);
         await appWindow.setIgnoreCursorEvents(false);
@@ -250,6 +281,144 @@ const ColorForm = ({
     }
   };
 
+  // ---- Image upload / paste + pixel-exact sampling ----
+  // This is the accurate path: raw getImageData reads, no HDR tone-mapping,
+  // no OS capture pipeline involved.
+
+  useEffect(() => {
+    if (!uploadedImage) return;
+    const canvas = imageCanvasRef.current;
+    const ctx = canvas?.getContext("2d", { willReadFrequently: true });
+    if (!canvas || !ctx) return;
+
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.imageSmoothingEnabled = false; // pixel-exact, no blending
+      ctx.drawImage(img, 0, 0);
+    };
+    img.src = uploadedImage;
+  }, [uploadedImage]);
+
+  const getPixelAt = (canvas: HTMLCanvasElement, clientX: number, clientY: number) => {
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) return null;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = Math.min(canvas.width - 1, Math.max(0, Math.floor((clientX - rect.left) * scaleX)));
+    const y = Math.min(canvas.height - 1, Math.max(0, Math.floor((clientY - rect.top) * scaleY)));
+    const data = ctx.getImageData(x, y, 1, 1).data;
+    return { r: data[0], g: data[1], b: data[2], x, y };
+  };
+
+  const handleFileSelected = (file: File | null) => {
+    if (!file || !file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = () => setUploadedImage(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileSelected(e.target.files?.[0] ?? null);
+  };
+
+  const handleImageCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = imageCanvasRef.current;
+    if (!canvas) return;
+    const pixel = getPixelAt(canvas, e.clientX, e.clientY);
+    if (!pixel) return;
+    applyRgb(pixel.r, pixel.g, pixel.b);
+  };
+
+  // ---- Hover magnifier (zoomed pixel loupe) ----
+  // Draws a small NxN neighborhood of source pixels, scaled up with no
+  // smoothing, into a floating canvas that follows the cursor. Gives
+  // pixel-exact visual feedback for exactly which pixel a click will sample.
+
+  const drawMagnifier = (sourceCanvas: HTMLCanvasElement, centerX: number, centerY: number) => {
+    const magCanvas = magnifierCanvasRef.current;
+    const ctx = magCanvas?.getContext("2d");
+    if (!magCanvas || !ctx) return;
+
+    const half = Math.floor(MAGNIFIER_SAMPLE / 2);
+    const sx = centerX - half;
+    const sy = centerY - half;
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, MAGNIFIER_SIZE, MAGNIFIER_SIZE);
+    ctx.drawImage(
+      sourceCanvas,
+      sx,
+      sy,
+      MAGNIFIER_SAMPLE,
+      MAGNIFIER_SAMPLE,
+      0,
+      0,
+      MAGNIFIER_SIZE,
+      MAGNIFIER_SIZE
+    );
+
+    // Highlight the exact center pixel (the one that would be picked)
+    const cellX = half * MAGNIFIER_ZOOM;
+    const cellY = half * MAGNIFIER_ZOOM;
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(cellX + 1.5, cellY + 1.5, MAGNIFIER_ZOOM - 3, MAGNIFIER_ZOOM - 3);
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(cellX + 0.5, cellY + 0.5, MAGNIFIER_ZOOM - 1, MAGNIFIER_ZOOM - 1);
+  };
+
+  const handleImageCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = imageCanvasRef.current;
+    if (!canvas) return;
+    const pixel = getPixelAt(canvas, e.clientX, e.clientY);
+    if (!pixel) return;
+
+    const rect = canvas.getBoundingClientRect();
+    drawMagnifier(canvas, pixel.x, pixel.y);
+
+    setMagnifier({
+      screenX: e.clientX - rect.left,
+      screenY: e.clientY - rect.top,
+      pixelX: pixel.x,
+      pixelY: pixel.y,
+      color: rgbToHex(pixel.r, pixel.g, pixel.b),
+    });
+  };
+
+  const handleImageCanvasMouseLeave = () => setMagnifier(null);
+
+  const clearUploadedImage = () => {
+    setUploadedImage(null);
+    setMagnifier(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  useEffect(() => {
+    if (mode !== "pick") return;
+
+    const handlePaste = (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (const item of items) {
+        if (item.type.startsWith("image/")) {
+          const file = item.getAsFile();
+          if (file) {
+            handleFileSelected(file);
+            e.preventDefault();
+          }
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, [mode]);
+
   const handleSave = () => {
     const trimmed = name.trim();
     onConfirm(trimmed || "Unnamed", currentHex);
@@ -258,13 +427,82 @@ const ColorForm = ({
   return (
     <div className="fixed inset-0 z-80 backdrop-blur-xs flex items-center justify-center p-4 animate-popUp">
       <ClickOutside
-        className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-sm w-full [corner-shape:notch] flex flex-col h-fit"
+        className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-sm w-full [corner-shape:notch] flex flex-col h-fit"
         onOutsideClick={onCancel}>
-        <div className="px-2">
+        <div className="flex flex-col gap-2 px-2">
           <div className="flex flex-row justify-start items-center h-full p-3 gap-3">
             <img src={icon} className="w-8 h-8" />
             <h3 className="text-lg">{title}</h3>
           </div>
+
+          {/* ---- Upload / paste image sampler (accurate path) ---- */}
+          {mode === "pick" && (
+            <div className="flex flex-col gap-2">
+              {!uploadedImage ? (
+                <label className="shadowCorner border-2 border-dashed border-custom-black rounded-[2px] [corner-shape:notch] bg-Secondary py-6 px-3 flex flex-col items-center justify-center gap-1 cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 text-center">
+                  <img src="/svg/iconAdd.svg" className="w-6 h-6 opacity-60" />
+                  <span className="text-xs">Click to upload, or paste with Ctrl+V</span>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileInputChange}
+                    className="hidden"
+                  />
+                </label>
+              ) : (
+                <div className="relative" onMouseLeave={handleImageCanvasMouseLeave}>
+                  <canvas
+                    ref={imageCanvasRef}
+                    onClick={handleImageCanvasClick}
+                    onMouseMove={handleImageCanvasMouseMove}
+                    className="w-full max-h-48 object-contain rounded-[2px] border-2 border-custom-black [corner-shape:notch] cursor-crosshair"
+                  />
+                  <button
+                    type="button"
+                    onClick={clearUploadedImage}
+                    title="Remove image"
+                    className="absolute top-1 right-1 shadowCorner w-6 h-6 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer flex items-center justify-center hover:-translate-y-0.5 active:translate-y-0.5">
+                    X
+                  </button>
+
+                  {/* Hover magnifier loupe — follows cursor, shows zoomed pixel neighborhood */}
+                  {magnifier && (
+                    <div
+                      className="absolute z-90 pointer-events-none flex flex-col items-center"
+                      style={{
+                        left: magnifier.screenX,
+                        top: magnifier.screenY,
+                        transform: "translate(-50%, calc(-100% - 16px))",
+                      }}>
+                      <div className="shadowCorner rounded-[2px] border-2 border-custom-black [corner-shape:notch] bg-Primary p-1 flex flex-col items-center gap-1">
+                        <canvas
+                          ref={magnifierCanvasRef}
+                          width={MAGNIFIER_SIZE}
+                          height={MAGNIFIER_SIZE}
+                          className="rounded-[2px] border-2 border-custom-black [corner-shape:notch]"
+                          style={{
+                            width: MAGNIFIER_SIZE,
+                            height: MAGNIFIER_SIZE,
+                            imageRendering: "pixelated",
+                          }}
+                        />
+                        <span className="text-[10px] font-mono px-1">{magnifier.color}</span>
+                      </div>
+                      <div
+                        className="w-0 h-0 -mt-px"
+                        style={{
+                          borderLeft: "6px solid transparent",
+                          borderRight: "6px solid transparent",
+                          borderTop: "8px solid var(--color-custom-black, #000)",
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* ---- Swatch + Hue/Lightness bars ---- */}
           <div className="flex gap-2 items-center">
@@ -302,13 +540,13 @@ const ColorForm = ({
                 />
               </div>
             </div>
-            
+
             {dropperSupported && (
               <button
                 type="button"
                 onClick={handleEyedropper}
                 disabled={isDropping}
-                title="Pick color from screen"
+                title="Pick color from screen (approximate — may run bright on HDR displays)"
                 className="shadowCorner w-10 h-10 shrink-0 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
                 <img src="/svg/iconDropper.svg" className="w-5 h-5" />
               </button>
@@ -316,14 +554,15 @@ const ColorForm = ({
           </div>
 
           {/* ---- HEX/RGB/HSL toggle + value input ---- */}
-          <div className="flex gap-2 items-center mt-2">
-            <button
-              type="button"
+          <div className="flex gap-2 items-center">
+            <PixelOutline
+              as="button"
               onClick={cycleColorMode}
-              className="shadowCorner text-xs font-bold py-2 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 shrink-0 w-14">
+              className="shadowCorner text-xs font-DogicaPixelBold py-2 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 shrink-0 w-14">
               {colorMode}
-            </button>
-            <input
+            </PixelOutline>
+            <PixelOutline
+              as="input"
               type="text"
               value={inputText}
               onFocus={() => {
@@ -340,17 +579,18 @@ const ColorForm = ({
           </div>
 
           {/* ---- Name input ---- */}
-          <input
+          <PixelOutline
+            as="input"
             type="text"
             autoFocus
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSave()}
             placeholder="Enter Color Name ..."
-            className="outline-none bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] py-2 px-1 w-full mt-2"
+            className="outline-none bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] py-2 px-1 w-full"
           />
         </div>
-        <div className="flex justify-end gap-2 mt-4 border-t-3 border-t-Primary-3 p-2 shadowCorner">
+        <div className="flex justify-end gap-2 border-t-3 border-t-Primary-3 p-2 shadowCorner">
           <button
             className="shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5"
             onClick={onCancel}>

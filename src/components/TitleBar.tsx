@@ -19,7 +19,7 @@ export default function TitleBar() {
   return (
     <div
       data-tauri-drag-region
-      className="z-[999] w-full rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] h-10 bg-Tertiary flex flex-row items-center justify-between px-2"
+      className="z-85 w-full rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] h-10 bg-Tertiary flex flex-row items-center justify-between px-2"
     >
       <span className="pointer-events-none whitespace-nowrap truncate">🎨 FloatingPalette</span>
 

@@ -21,11 +21,9 @@ const ClickOutside = ({ children, onOutsideClick, ignoreRefs = [], className = "
         onOutsideClick();
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
+    document.addEventListener("dblclick", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("dblclick", handleClickOutside);
     };
   }, [onOutsideClick, ignoreRefs]);
 

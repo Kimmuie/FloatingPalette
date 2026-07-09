@@ -16,10 +16,10 @@
         "title": "FloatingPallete",
         "decorations": false,
         "resizable": true,
-        "width": 350,
+        "width": 290,
         "height": 600,
         "minWidth": 290,
-        "minHeight": 300
+        "minHeight": 320
       }
     ],
     "security": {
