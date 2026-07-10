@@ -15,7 +15,7 @@ interface ColorFormProps {
 }
 
 type ColorMode = "HEX" | "RGB" | "HSL";
-type BarKind = "hue" | "light";
+type BarKind = "hue" | "sat" |"light";
 
 // ---------------------------------------------------------------------------
 // Color conversion helpers
@@ -112,7 +112,7 @@ const MAGNIFIER_SIZE = MAGNIFIER_SAMPLE * MAGNIFIER_ZOOM;
 const ColorForm = ({
   mode,
   initialName = "",
-  initialHex = "#ffffff",
+  initialHex = "#ff0000",
   onConfirm,
   onCancel,
 }: ColorFormProps) => {
@@ -126,9 +126,11 @@ const ColorForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [hue, setHue] = useState(initialHsl.h);
+  const [saturation, setSaturation] = useState(initialHsl.s);
   const [lightness, setLightness] = useState(initialHsl.l);
 
   const hueBarRef = useRef<HTMLDivElement>(null);
+  const satBarRef = useRef<HTMLDivElement>(null);
   const lightBarRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef<BarKind | null>(null);
   const isFocusedRef = useRef(false);
@@ -154,9 +156,9 @@ const ColorForm = ({
 
   // Single source of truth color, derived from hue/lightness
   const currentHex = useMemo(() => {
-    const { r, g, b } = hslToRgb(hue, 100, lightness);
+    const { r, g, b } = hslToRgb(hue, saturation, lightness);
     return rgbToHex(r, g, b);
-  }, [hue, lightness]);
+  }, [hue, saturation, lightness]);
 
   // What the text field *should* show for the current mode
   const displayValue = useMemo(() => {
@@ -177,17 +179,19 @@ const ColorForm = ({
   const applyRgb = (r: number, g: number, b: number) => {
     const hsl = rgbToHsl(r, g, b);
     setHue(hsl.h);
+    setSaturation(hsl.s);
     setLightness(hsl.l);
   };
 
   // ---- Slider dragging (window-level pointer listeners) ----
 
   const updateFromClientX = (bar: BarKind, clientX: number) => {
-    const ref = bar === "hue" ? hueBarRef.current : lightBarRef.current;
+    const ref = bar === "hue" ? hueBarRef.current : bar === "sat" ? satBarRef.current : lightBarRef.current;
     if (!ref) return;
     const rect = ref.getBoundingClientRect();
     const percent = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
     if (bar === "hue") setHue(percent * 360);
+    else if (bar === "sat") setSaturation(percent * 100);
     else setLightness(percent * 100);
   };
 
@@ -219,36 +223,44 @@ const ColorForm = ({
     setColorMode((m) => (m === "HEX" ? "RGB" : m === "RGB" ? "HSL" : "HEX"));
   };
 
-  const commitTextInput = () => {
-    const val = inputText.trim();
+  const tryApplyTextInput = (val: string) => {
+  const trimmed = val.trim();
 
-    if (colorMode === "HEX") {
-      if (isValidHex(val)) {
-        const { r, g, b } = hexToRgb(val);
-        applyRgb(r, g, b);
-        return;
-      }
-    } else if (colorMode === "RGB") {
-      const parts = val.split(",").map((p) => parseFloat(p.trim()));
-      if (parts.length === 3 && parts.every((n) => !isNaN(n))) {
-        const [r, g, b] = parts.map((n) => Math.max(0, Math.min(255, n)));
-        applyRgb(r, g, b);
-        return;
-      }
-    } else {
-      // HSL — saturation is read but not stored, since the picker locks it at 100%
-      const parts = val.replace(/%/g, "").split(",").map((p) => parseFloat(p.trim()));
-      if (parts.length === 3 && parts.every((n) => !isNaN(n))) {
-        const [h, , l] = parts;
-        setHue(((h % 360) + 360) % 360);
-        setLightness(Math.max(0, Math.min(100, l)));
-        return;
-      }
+  if (colorMode === "HEX") {
+    if (isValidHex(trimmed)) {
+      const { r, g, b } = hexToRgb(trimmed);
+      applyRgb(r, g, b);
+      return true;
     }
+  } else if (colorMode === "RGB") {
+    const parts = trimmed.split(",").map((p) => parseFloat(p.trim()));
+    if (parts.length === 3 && parts.every((n) => !isNaN(n))) {
+      const [r, g, b] = parts.map((n) => Math.max(0, Math.min(255, n)));
+      applyRgb(r, g, b);
+      return true;
+    }
+  } else {
+    const parts = trimmed.replace(/%/g, "").split(",").map((p) => parseFloat(p.trim()));
+    if (parts.length === 3 && parts.every((n) => !isNaN(n))) {
+      const [h, s, l] = parts;
+      setHue(((h % 360) + 360) % 360);
+      setSaturation(Math.max(0, Math.min(100, s)));
+      setLightness(Math.max(0, Math.min(100, l)));
+      return true;
+    }
+  }
 
-    // Invalid input — snap back to the last valid display value
-    setInputText(displayValue);
+    return false;
   };
+
+  const commitTextInput = () => {
+    const ok = tryApplyTextInput(inputText);
+    if (!ok) setInputText(displayValue);
+  };
+
+  useEffect(() => {
+  if (!isFocusedRef.current) setInputText(displayValue);
+}, [displayValue]);
 
   // ---- Native OS eyedropper ----
   // NOTE: this samples the whole screen through Chromium's own capture path,
@@ -427,12 +439,24 @@ const ColorForm = ({
   return (
     <div className="fixed inset-0 z-80 backdrop-blur-xs flex items-center justify-center p-4 animate-popUp">
       <ClickOutside
-        className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-sm w-full [corner-shape:notch] flex flex-col h-fit"
+        className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg w-fit [corner-shape:notch] flex flex-col h-fit"
         onOutsideClick={onCancel}>
-        <div className="flex flex-col gap-2 px-2">
-          <div className="flex flex-row justify-start items-center h-full p-3 gap-3">
-            <img src={icon} className="w-8 h-8" />
-            <h3 className="text-lg">{title}</h3>
+        <div className="flex flex-col w-full h-full gap-2 px-2">
+          <div className="flex flex-row justify-between items-center h-full p-3 gap-3">
+            <div className="flex flex-row gap-2">
+              <img src={icon} className="w-8 h-8" />
+              <h3 className="text-lg">{title}</h3>
+            </div>
+            {dropperSupported && (
+              <button
+                type="button"
+                onClick={handleEyedropper}
+                disabled={isDropping}
+                title="Pick color from screen (approximate — may run bright on HDR displays)"
+                className="shadowCorner w-10 h-10 shrink-0 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                <img src="/svg/iconDropper.svg" className="w-5 h-5" />
+              </button>
+            )}
           </div>
 
           {/* ---- Upload / paste image sampler (accurate path) ---- */}
@@ -507,10 +531,10 @@ const ColorForm = ({
           {/* ---- Swatch + Hue/Lightness bars ---- */}
           <div className="flex gap-2 items-center">
             <div
-              className="w-10 h-10 rounded-[2px] border-2 border-custom-black [corner-shape:notch] shrink-0"
+              className="flex-1 aspect-square w-16 h-16 rounded-[2px] border-2 border-custom-black [corner-shape:notch]"
               style={{ backgroundColor: currentHex }}
             />
-            <div className="flex-1 flex flex-col gap-2">
+            <div className="flex-4  flex flex-col gap-2">
               {/* Hue bar */}
               <div
                 ref={hueBarRef}
@@ -525,7 +549,6 @@ const ColorForm = ({
                   style={{ left: `${(hue / 360) * 100}%` }}
                 />
               </div>
-
               {/* Lightness bar */}
               <div
                 ref={lightBarRef}
@@ -539,36 +562,42 @@ const ColorForm = ({
                   style={{ left: `${lightness}%` }}
                 />
               </div>
+              {/* Saturation bar */}
+              <div
+                ref={satBarRef}
+                onPointerDown={handleBarPointerDown("sat")}
+                className="relative h-4 rounded-[2px] border-2 border-custom-black cursor-pointer touch-none"
+                style={{
+                  background: `linear-gradient(to right, hsl(${hue}, 0%, ${lightness}%), hsl(${hue}, 100%, ${lightness}%))`,
+                }}>
+                <div
+                  className="absolute top-1/2 w-3 h-5 -translate-y-1/2 -translate-x-1/2 bg-white border-2 border-custom-black rounded-[2px] pointer-events-none"
+                  style={{ left: `${saturation}%` }}
+                />
+              </div>
             </div>
 
-            {dropperSupported && (
-              <button
-                type="button"
-                onClick={handleEyedropper}
-                disabled={isDropping}
-                title="Pick color from screen (approximate — may run bright on HDR displays)"
-                className="shadowCorner w-10 h-10 shrink-0 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
-                <img src="/svg/iconDropper.svg" className="w-5 h-5" />
-              </button>
-            )}
           </div>
 
           {/* ---- HEX/RGB/HSL toggle + value input ---- */}
-          <div className="flex gap-2 items-center">
+          <div className="flex w-full gap-2 items-center">
             <PixelOutline
               as="button"
               onClick={cycleColorMode}
-              className="shadowCorner text-xs font-DogicaPixelBold py-2 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 shrink-0 w-14">
+              className="shadowCorner text-xs font-DogicaPixelBold py-2 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 shrink-0 px-2">
               {colorMode}
             </PixelOutline>
-            <PixelOutline
-              as="input"
+            <input
               type="text"
               value={inputText}
               onFocus={() => {
                 isFocusedRef.current = true;
               }}
-              onChange={(e) => setInputText(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setInputText(val);
+                tryApplyTextInput(val);
+              }}
               onBlur={() => {
                 isFocusedRef.current = false;
                 commitTextInput();

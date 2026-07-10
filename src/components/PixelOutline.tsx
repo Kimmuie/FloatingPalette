@@ -13,7 +13,7 @@ export default function PixelOutline({
 
   return (
     <div className="relative">
-      <div className="opacity-30 bg-custom-black absolute inset-0 pointer-events-none" />
+      <div className="opacity-30 bg-custom-black absolute inset-0 pointer-events-none " />
 
       <Component
         className={`relative ${className}`}

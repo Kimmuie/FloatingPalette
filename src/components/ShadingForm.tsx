@@ -190,11 +190,11 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
   return (
     <div className="fixed inset-0 z-80 backdrop-blur-xs flex items-center justify-center p-4 animate-popUp">
       <ClickOutside
-        className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-lg w-full [corner-shape:notch] flex flex-col h-fit max-h-[85vh]"
+        className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-lg w-full [corner-shape:notch] flex flex-col h-fit max-h-[85vh]"
         onOutsideClick={onCancel}>
 
         {/* ---- Header ---- */}
-        <div className="flex flex-row justify-between items-center p-3 gap-3 border-b-2 border-custom-black">
+        <div className="flex flex-row justify-between items-center p-3 gap-3 border-b-3 border-custom-black shadowCorner">
           <div className="flex items-center gap-2 min-w-0">
             <div
               className="w-8 h-8 shrink-0 rounded-[2px] border-2 border-custom-black [corner-shape:notch]"
@@ -206,7 +206,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
         </div>
 
         {/* ---- Categories ---- */}
-        <div className="flex flex-col gap-3 px-3 py-2 overflow-y-auto">
+        <div className="flex flex-col gap-3 px-3 py-3 overflow-y-auto">
           {categories.map((cat) => (
             <div key={cat.id} className="flex flex-col gap-1.5">
               <div className="flex items-center gap-1.5">
@@ -256,7 +256,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
           <button
             type="button"
             disabled={selectedKeys.size === 0}
-            className="shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-Secondary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`${selectedKeys.size > 9 ? "whitespace-normal" : "whitespace-nowrap"} shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-Secondary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed`}
             onClick={handleAdd}>
             Add ({selectedKeys.size})
           </button>

@@ -169,7 +169,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
                 key={colorIndex}
                 className={` hover:-translate-y-0.5 active:translate-y-0.5 flex flex-col w-full items-center gap-1 p-2 rounded-[2px] border-2 [corner-shape:notch] border-custom-black shadowCorner transition-colors
                   ${isSelected ? "bg-Tertiary" : "bg-Quaternary"}
-                  ${selectMode || colorShading ? "cursor-grab active:cursor-grabbing" : " cursor-pointer"}
+                  ${selectMode ? "cursor-grab active:cursor-grabbing" : " cursor-pointer"}
                   ${dragOverIndex === colorIndex ? "outline-1.5 outline-dashed outline-Tertiary" : ""}`}
               >
                 <div className="flex flex-row gap-2">
