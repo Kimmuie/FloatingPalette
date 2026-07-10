@@ -197,7 +197,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
         <div className="flex flex-row justify-between items-center p-3 gap-3 border-b-3 border-custom-black shadowCorner">
           <div className="flex items-center gap-2 min-w-0">
             <div
-              className="w-8 h-8 shrink-0 rounded-[2px] border-2 border-custom-black [corner-shape:notch]"
+              className="w-6 h-6 shrink-0 rounded-[2px] border-2 border-custom-black [corner-shape:notch]"
               style={{ backgroundColor: selectedColor.hexValue }}
             />
             <h3 className="text-lg font-DogicaPixelBold truncate">{selectedColor.colorName} Shading</h3>
@@ -209,13 +209,13 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
         <div className="flex flex-col gap-3 px-3 py-3 overflow-y-auto">
           {categories.map((cat) => (
             <div key={cat.id} className="flex flex-col gap-1.5">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center xs:justify-start justify-between gap-1.5">
                 <span className="text-xs font-DogicaPixelBold">{cat.title}</span>
                 <button
                   type="button"
                   title={cat.description}
                   aria-label={cat.description}
-                  className="w-5 h-5 shadowCorner shrink-0 rounded-[2px] border-2 [corner-shape:notch] border-custom-black bg-Tertiary text-xs leading-none flex items-center justify-center cursor-help">
+                  className="w-5 h-5 shadowCorner shrink-0 rounded-[2px] border-2 [corner-shape:notch] border-custom-black bg-Tertiary hover:bg-Tertiary-Dark text-xs leading-none flex items-center justify-center cursor-help">
                   ?
                 </button>
               </div>
@@ -229,12 +229,12 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
                       title={sw.hex}
                       onClick={() => toggleSwatch(sw.key)}
                       className={`relative w-9 h-9 shrink-0 rounded-[2px] border-2 border-custom-black [corner-shape:notch]  cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 ${
-                        isSelected ? "ring-2 ring-offset-1 ring-Tertiary" : ""
+                        isSelected ? "ring-1 ring-offset-2 ring-offset-Tertiary" : ""
                       }`}
                       style={{ backgroundColor: sw.hex }}>
                       {isSelected && (
-                        <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white bg-black/30 rounded-[2px]">
-                          ✓
+                        <span className="absolute inset-0 flex items-center justify-center  text-custom-black rounded-[2px]">
+                          X
                         </span>
                       )}
                     </button>
@@ -246,7 +246,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
         </div>
 
         {/* ---- Footer ---- */}
-        <div className="flex justify-end gap-2 border-t-3 border-t-Primary-3 p-2 shadowCorner">
+        <div className="flex justify-center xs:justify-end gap-2 border-t-3 border-t-Primary-3 p-2 shadowCorner">
           <button
             type="button"
             className="shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5"
@@ -256,7 +256,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
           <button
             type="button"
             disabled={selectedKeys.size === 0}
-            className={`${selectedKeys.size > 9 ? "whitespace-normal" : "whitespace-nowrap"} shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-Secondary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`${selectedKeys.size > 9 ? "whitespace-normal" : "whitespace-nowrap"} shadowCorner py-1 xs:px-3 px-2 rounded-[2px] border-2 border-custom-black bg-Quaternary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed`}
             onClick={handleAdd}>
             Add ({selectedKeys.size})
           </button>
