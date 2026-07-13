@@ -2,6 +2,7 @@ import type { Palette } from "../components/types";
 import type { Dispatch, SetStateAction } from "react";
 import PixelOutline from "../components/PixelOutline";
 import CreateNew from "../components/CreateNew";
+import SettingsForm from "../components/SettingsForm";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
@@ -17,6 +18,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
   const [showCreateModal, setShowCreateModal] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
 
   useEffect(() => {
   const el = scrollRef.current;
@@ -62,20 +64,21 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
         <div className="flex gap-2">
             <PixelOutline
                 as="button"
-                className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center py-2 px-4"
+                className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center py-2 px-3 xs:px-4"
                 onClick={() => setShowCreateModal(true)}>
                 Create New
             </PixelOutline>
             <PixelOutline
                 as="button"
-                className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center py-2 px-4"
+                className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center py-2 px-3 xs:px-4"
                 onClick={() => console.log("Button clicked!")}>
                 Generate Palette
             </PixelOutline>
         </div>
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-palette w-full">
-          <div 
+        <div 
             ref={scrollRef}
+            className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden scrollbar-palette w-full">
+          <div 
             className={`grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 grid-cols-1 gap-2 w-full ${hasOverflow ? "pr-2" : ""}`}>
               {paletteList.map((palette, index) => (
                 <PixelOutline key={index} className="h-full flex flex-col justify-between gap-2 bg-Quaternary rounded-[2px] [corner-shape:notch] shadowCorner border-2 border-custom-black p-2">
@@ -113,7 +116,11 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
                         </>
                       )}
                     </div>
-                    <div className="grid grid-cols-7 items-center gap-2">
+                    <div   
+                      className="grid gap-2"
+                      style={{
+                        gridTemplateColumns: "repeat(auto-fill, minmax(24px, 24px))",
+                      }}>
                       {palette.colors.map((color, colorIndex) => (
                           <PixelOutline
                             className="min-w-6 w-full h-6 border-2 border-custom-black rounded-[2px] [corner-shape:notch]"
@@ -133,10 +140,13 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
         </div>
         <div className="flex justify-end flex-shrink-0 w-full">
           <PixelOutline className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center p-1"
-            >
+            onClick={() => setOpenSetting(true)}>
             <img src="/svg/iconSetting.svg" />
           </PixelOutline>
         </div>
+        {openSetting && (
+          <SettingsForm onClose={() => setOpenSetting(false)}></SettingsForm>
+        )}
         {showCreateModal && (
           <CreateNew onConfirm={handleCreate} onCancel={() => setShowCreateModal(false)} />
         )}

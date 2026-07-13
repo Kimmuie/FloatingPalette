@@ -6,6 +6,7 @@ import ColorForm from "../components/ColorForm";
 import ShadingForm from "../components/ShadingForm";
 import StyleForm from "../components/StyleForm";
 import { useRef, useState, useEffect } from "react";
+import { useSettings, formatColorForCopy } from "../contexts/SettingsContext";
 
 interface PalettePageProps {
   paletteList: Palette[];
@@ -13,6 +14,7 @@ interface PalettePageProps {
 }
 
 export default function PalettePage({ paletteList, setPaletteList }: PalettePageProps) {
+  const { copyFormat, showHexInPalette } = useSettings();
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [selectMode, setSelectMode] = useState(false);
   const [addColor, setAddColor] = useState(false);
@@ -41,7 +43,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
 
   const handleCopyColor = (hex: string, colorIndex: number) => {
     if (colorShading || changeStyle) return;
-    navigator.clipboard.writeText(hex);
+    navigator.clipboard.writeText(formatColorForCopy(hex, copyFormat));
     setCopiedIndex(colorIndex);
     setTimeout(() => setCopiedIndex((cur) => (cur === colorIndex ? null : cur)), 1200);
   };
@@ -91,7 +93,6 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
       return new Set(palette.colors.map((_, i) => i));
     });
   };
-
 
   const toggleSelectColor = (colorIndex: number) => {
     setSelectedIndices((prev) => {
@@ -151,20 +152,20 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   };
 
   useEffect(() => {
-  const el = scrollRef.current;
-  if (!el) return;
+    const el = scrollRef.current;
+    if (!el) return;
 
-  const checkOverflow = () => {
-    setHasOverflow(el.scrollHeight > el.clientHeight);
-  };
+    const checkOverflow = () => {
+      setHasOverflow(el.scrollHeight > el.clientHeight);
+    };
 
-  checkOverflow();
+    checkOverflow();
 
-  const observer = new ResizeObserver(checkOverflow);
-  observer.observe(el);
+    const observer = new ResizeObserver(checkOverflow);
+    observer.observe(el);
 
-  return () => observer.disconnect();
-}, [palette.colors.length]);
+    return () => observer.disconnect();
+  }, [palette.colors.length]);
 
   if (!palette) {
     return (
@@ -201,8 +202,8 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
               ? "Pick a color to Shade"
               : changeStyle
               ? `Select colors to Restyle`
-              : selectMode 
-              ?`Editing ${palette.paletteName}`
+              : selectMode
+              ? `Editing ${palette.paletteName}`
               : palette.paletteName}
           </h1>
           {!inPickerMode && (
@@ -215,14 +216,14 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
           )}
         </div>
         {(changeStyle || selectMode) && (
-            <PixelOutline
-              as="button"
-              className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full"
-              onClick={toggleSelectAll}>
-              Select All
-            </PixelOutline>
+          <PixelOutline
+            as="button"
+            className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full"
+            onClick={toggleSelectAll}>
+            Select All
+          </PixelOutline>
         )}
-        <div 
+        <div
           ref={scrollRef}
           className={`py-1 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 overflow-y-auto scrollbar-palette ${hasOverflow ? "pr-2" : ""}`}>
           {palette.colors.map((color, colorIndex) => {
@@ -270,84 +271,86 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
                   )}
                 </div>
                 <span className="text-xs truncate w-full text-center">{color.colorName}</span>
-                <span className="text-xs opacity-70">
-                  {copiedIndex === colorIndex ? "Copied!" : color.hexValue}
-                </span>
+                {showHexInPalette && (
+                  <span className="text-xs opacity-70">
+                    {copiedIndex === colorIndex ? "Copied!" : color.hexValue}
+                  </span>
+                )}
               </PixelOutline>
             );
           })}
         </div>
       </div>
-    <div className="flex-shrink-0">
-      {selectMode || inPickerMode ? (
-        <>
-          {selectMode && (
-            <div className="grid grid-cols-2 gap-2">
+      <div className="flex-shrink-0">
+        {selectMode || inPickerMode ? (
+          <>
+            {selectMode && (
+              <div className="grid grid-cols-2 gap-2">
+                <PixelOutline
+                  as="button"
+                  className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full "
+                  onClick={toggleSelectMode}>
+                  Done
+                </PixelOutline>
+                <PixelOutline
+                  as="button"
+                  disabled={selectedIndices.size === 0}
+                  className="bg-Tertiary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleDeleteSelected}>
+                  Delete All
+                </PixelOutline>
+              </div>
+            )}
+            {colorShading && (
               <PixelOutline
                 as="button"
                 className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full "
-                onClick={toggleSelectMode}>
+                onClick={toggleColorShading}>
                 Done
               </PixelOutline>
-              <PixelOutline
-                as="button"
-                disabled={selectedIndices.size === 0}
-                className="bg-Tertiary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={handleDeleteSelected}>
-                Delete All
-              </PixelOutline>
-            </div>
-          )}
-          {colorShading && (
+            )}
+            {changeStyle && (
+              <div className="grid grid-cols-2 gap-2">
+                <PixelOutline
+                  as="button"
+                  className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full "
+                  onClick={toggleChangeStyle}>
+                  Done
+                </PixelOutline>
+                <PixelOutline
+                  as="button"
+                  disabled={selectedIndices.size === 0}
+                  className="bg-custom-green hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={openStyleForm}>
+                  Restyle ({selectedIndices.size})
+                </PixelOutline>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="grid grid-cols-2 gap-2 ">
             <PixelOutline
-              as="button"
-              className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full "
-              onClick={toggleColorShading}>
-              Done
+              onClick={() => setAddColor(true)}
+              as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
+              Add Color
             </PixelOutline>
-          )}
-          {changeStyle && (
-            <div className="grid grid-cols-2 gap-2">
-              <PixelOutline
-                as="button"
-                className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full "
-                onClick={toggleChangeStyle}>
-                Done
-              </PixelOutline>
-              <PixelOutline
-                as="button"
-                disabled={selectedIndices.size === 0}
-                className="bg-custom-green hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={openStyleForm}>
-                Restyle ({selectedIndices.size})
-              </PixelOutline>
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="grid grid-cols-2 gap-2 ">
-          <PixelOutline
-            onClick={() => setAddColor(true)}
-            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
-            Add Color
-          </PixelOutline>
-          <PixelOutline
-            onClick={() => setColorPick(true)}
-            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
-            Color Picker
-          </PixelOutline>
-          <PixelOutline
-            onClick={toggleColorShading}
-            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
-            Shading
-          </PixelOutline>
-          <PixelOutline
-            onClick={toggleChangeStyle}
-            as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
-            Change Style
-          </PixelOutline>
-        </div>
-      )}
+            <PixelOutline
+              onClick={() => setColorPick(true)}
+              as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
+              Color Picker
+            </PixelOutline>
+            <PixelOutline
+              onClick={toggleColorShading}
+              as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
+              Shading
+            </PixelOutline>
+            <PixelOutline
+              onClick={toggleChangeStyle}
+              as="button" className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full">
+              Change Style
+            </PixelOutline>
+          </div>
+        )}
       </div>
 
       {editingColorIndex !== null && (
@@ -371,8 +374,8 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
         <ColorForm
           mode="pick"
           onConfirm={handleAddColorConfirm}
-           onCancel={() => setColorPick(false)}
-         />
+          onCancel={() => setColorPick(false)}
+        />
       )}
       {selectShadingIndex !== null && (
         <ShadingForm
