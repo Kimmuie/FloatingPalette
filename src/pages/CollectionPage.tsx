@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import PixelOutline from "../components/PixelOutline";
 import CreateNew from "../components/CreateNew";
 import SettingsForm from "../components/SettingsForm";
+import GenerateForm from "../components/GenerateForm";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
@@ -18,6 +19,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
   const [showCreateModal, setShowCreateModal] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [showGenerate, setShowGenerate] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
 
   useEffect(() => {
@@ -59,6 +61,14 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
     setShowCreateModal(false);
   };
 
+  const handleGenerate = (
+    name: string,
+    colors: { name: string; hexValue: string }[]
+  ) => {
+    setPaletteList((prev) => [...prev, { paletteName: name, colors }]);
+    setShowGenerate(false);
+  };
+
   return (
     <div className="px-2 gap-2 bg-Secondary rounded-[2px] shadowCorner border-b-2 border-x-2 border-custom-black [corner-shape:notch] flex flex-col items-center justify-start h-full w-full overflow-y-hidden overflow-x-hidden py-2 ">
         <div className="flex gap-2">
@@ -71,7 +81,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
             <PixelOutline
                 as="button"
                 className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center py-2 px-3 xs:px-4"
-                onClick={() => console.log("Button clicked!")}>
+                onClick={() => setShowGenerate(true)}>
                 Generate Palette
             </PixelOutline>
         </div>
@@ -149,6 +159,9 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
         )}
         {showCreateModal && (
           <CreateNew onConfirm={handleCreate} onCancel={() => setShowCreateModal(false)} />
+        )}
+        {showGenerate && (
+          <GenerateForm onConfirm={handleGenerate} onCancel={() => setShowGenerate(false)} />
         )}
     </div>
   );

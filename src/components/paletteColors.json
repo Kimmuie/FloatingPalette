@@ -1,0 +1,2202 @@
+[
+  {
+    "id": "c001",
+    "name": "Pastel Red",
+    "hex": "#E0878F",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c002",
+    "name": "Vintage Red",
+    "hex": "#99222C",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c003",
+    "name": "Retro Red",
+    "hex": "#CF1B2A",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c004",
+    "name": "Vibrant Red",
+    "hex": "#F61528",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c005",
+    "name": "Neon Red",
+    "hex": "#FA293B",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c006",
+    "name": "Muted Red",
+    "hex": "#CD4A55",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c007",
+    "name": "Earthy Red",
+    "hex": "#C72330",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c008",
+    "name": "Jewel Red",
+    "hex": "#C11120",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c009",
+    "name": "Warm Red",
+    "hex": "#E54956",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c010",
+    "name": "Summer Red",
+    "hex": "#E56B76",
+    "colorTags": [
+      "Red"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c011",
+    "name": "Pastel Orange",
+    "hex": "#E4B286",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c012",
+    "name": "Vintage Orange",
+    "hex": "#AF6423",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c013",
+    "name": "Retro Orange",
+    "hex": "#E0761A",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c014",
+    "name": "Vibrant Orange",
+    "hex": "#F78522",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c015",
+    "name": "Neon Orange",
+    "hex": "#FA9033",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c016",
+    "name": "Muted Orange",
+    "hex": "#D48D4E",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c017",
+    "name": "Earthy Orange",
+    "hex": "#D87722",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c018",
+    "name": "Jewel Orange",
+    "hex": "#D46C11",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c019",
+    "name": "Warm Orange",
+    "hex": "#E8964F",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c020",
+    "name": "Summer Orange",
+    "hex": "#E8A76D",
+    "colorTags": [
+      "Orange"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c021",
+    "name": "Pastel Yellow",
+    "hex": "#EBE2B2",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c022",
+    "name": "Vintage Yellow",
+    "hex": "#D1B733",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c023",
+    "name": "Retro Yellow",
+    "hex": "#E7CC46",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c024",
+    "name": "Vibrant Yellow",
+    "hex": "#F9DD53",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c025",
+    "name": "Neon Yellow",
+    "hex": "#FBE265",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c026",
+    "name": "Muted Yellow",
+    "hex": "#DBCB7B",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c027",
+    "name": "Earthy Yellow",
+    "hex": "#E0C74D",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c028",
+    "name": "Jewel Yellow",
+    "hex": "#ECCC2C",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c029",
+    "name": "Warm Yellow",
+    "hex": "#ECDA7E",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c030",
+    "name": "Spring Yellow",
+    "hex": "#EEE09B",
+    "colorTags": [
+      "Yellow"
+    ],
+    "typeTags": [
+      "Spring"
+    ]
+  },
+  {
+    "id": "c031",
+    "name": "Pastel Green",
+    "hex": "#8FD99B",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c032",
+    "name": "Vintage Green",
+    "hex": "#2C903C",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c033",
+    "name": "Retro Green",
+    "hex": "#27C341",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c034",
+    "name": "Vibrant Green",
+    "hex": "#22EA43",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c035",
+    "name": "Neon Green",
+    "hex": "#34EF53",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c036",
+    "name": "Muted Green",
+    "hex": "#56C268",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c037",
+    "name": "Earthy Green",
+    "hex": "#2EBB46",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c038",
+    "name": "Jewel Green",
+    "hex": "#1CB735",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c039",
+    "name": "Cool Green",
+    "hex": "#54DA6A",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c040",
+    "name": "Spring Green",
+    "hex": "#74DC86",
+    "colorTags": [
+      "Green"
+    ],
+    "typeTags": [
+      "Spring"
+    ]
+  },
+  {
+    "id": "c041",
+    "name": "Pastel Teal",
+    "hex": "#7FD2CB",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c042",
+    "name": "Vintage Teal",
+    "hex": "#2C8C84",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c043",
+    "name": "Retro Teal",
+    "hex": "#28B8AC",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c044",
+    "name": "Vibrant Teal",
+    "hex": "#1CE3D2",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c045",
+    "name": "Neon Teal",
+    "hex": "#2CE8D8",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c046",
+    "name": "Muted Teal",
+    "hex": "#4CBDB4",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c047",
+    "name": "Earthy Teal",
+    "hex": "#2FB1A6",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c048",
+    "name": "Jewel Teal",
+    "hex": "#1FADA2",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c049",
+    "name": "Cool Teal",
+    "hex": "#49D4C9",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c050",
+    "name": "Winter Teal",
+    "hex": "#66D6CD",
+    "colorTags": [
+      "Teal"
+    ],
+    "typeTags": [
+      "Winter"
+    ]
+  },
+  {
+    "id": "c051",
+    "name": "Pastel Blue",
+    "hex": "#8DB5DD",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c052",
+    "name": "Vintage Blue",
+    "hex": "#2B69A6",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c053",
+    "name": "Retro Blue",
+    "hex": "#237DD7",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c054",
+    "name": "Vibrant Blue",
+    "hex": "#278CF1",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c055",
+    "name": "Neon Blue",
+    "hex": "#3896F5",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c056",
+    "name": "Muted Blue",
+    "hex": "#5991CA",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c057",
+    "name": "Earthy Blue",
+    "hex": "#2B7DCE",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c058",
+    "name": "Jewel Blue",
+    "hex": "#1873CD",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c059",
+    "name": "Cool Blue",
+    "hex": "#569CE1",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c060",
+    "name": "Winter Blue",
+    "hex": "#74ABE2",
+    "colorTags": [
+      "Blue"
+    ],
+    "typeTags": [
+      "Winter"
+    ]
+  },
+  {
+    "id": "c061",
+    "name": "Pastel Indigo",
+    "hex": "#726AD0",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c062",
+    "name": "Vintage Indigo",
+    "hex": "#30288C",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c063",
+    "name": "Retro Indigo",
+    "hex": "#3025B3",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c064",
+    "name": "Vibrant Indigo",
+    "hex": "#2A1AD8",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c065",
+    "name": "Neon Indigo",
+    "hex": "#2F1EE6",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c066",
+    "name": "Muted Indigo",
+    "hex": "#493EBC",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c067",
+    "name": "Earthy Indigo",
+    "hex": "#352AAD",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c068",
+    "name": "Jewel Indigo",
+    "hex": "#281CA9",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c069",
+    "name": "Cool Indigo",
+    "hex": "#4639D4",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c070",
+    "name": "Winter Indigo",
+    "hex": "#5E53D5",
+    "colorTags": [
+      "Indigo"
+    ],
+    "typeTags": [
+      "Winter"
+    ]
+  },
+  {
+    "id": "c071",
+    "name": "Pastel Purple",
+    "hex": "#AA81D3",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c072",
+    "name": "Vintage Purple",
+    "hex": "#67319C",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c073",
+    "name": "Retro Purple",
+    "hex": "#782BC5",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c074",
+    "name": "Vibrant Purple",
+    "hex": "#8627E4",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c075",
+    "name": "Neon Purple",
+    "hex": "#8F35E9",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c076",
+    "name": "Muted Purple",
+    "hex": "#8A54C0",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c077",
+    "name": "Earthy Purple",
+    "hex": "#7833BE",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c078",
+    "name": "Jewel Purple",
+    "hex": "#7022BE",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c079",
+    "name": "Cool Purple",
+    "hex": "#9351D6",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c080",
+    "name": "Winter Purple",
+    "hex": "#A16AD7",
+    "colorTags": [
+      "Purple"
+    ],
+    "typeTags": [
+      "Winter"
+    ]
+  },
+  {
+    "id": "c081",
+    "name": "Pastel Pink",
+    "hex": "#EAB8D1",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c082",
+    "name": "Vintage Pink",
+    "hex": "#D45B98",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c083",
+    "name": "Retro Pink",
+    "hex": "#E668A7",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c084",
+    "name": "Vibrant Pink",
+    "hex": "#F66FB3",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c085",
+    "name": "Neon Pink",
+    "hex": "#F87CBA",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c086",
+    "name": "Muted Pink",
+    "hex": "#DC91B6",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c087",
+    "name": "Earthy Pink",
+    "hex": "#E06EA7",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c088",
+    "name": "Jewel Pink",
+    "hex": "#EB549F",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c089",
+    "name": "Warm Pink",
+    "hex": "#EB91BE",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c090",
+    "name": "Winter Pink",
+    "hex": "#ECA7C9",
+    "colorTags": [
+      "Pink"
+    ],
+    "typeTags": [
+      "Winter"
+    ]
+  },
+  {
+    "id": "c091",
+    "name": "Pastel Brown",
+    "hex": "#A97047",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c092",
+    "name": "Vintage Brown",
+    "hex": "#5A3A23",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c093",
+    "name": "Retro Brown",
+    "hex": "#774725",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c094",
+    "name": "Vibrant Brown",
+    "hex": "#925021",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c095",
+    "name": "Neon Brown",
+    "hex": "#A05622",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c096",
+    "name": "Muted Brown",
+    "hex": "#825738",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c097",
+    "name": "Earthy Brown",
+    "hex": "#734728",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c098",
+    "name": "Jewel Brown",
+    "hex": "#6E3F1E",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c099",
+    "name": "Warm Brown",
+    "hex": "#995C31",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c100",
+    "name": "Summer Brown",
+    "hex": "#A7673A",
+    "colorTags": [
+      "Brown"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c101",
+    "name": "Pastel Maroon",
+    "hex": "#902F3F",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c102",
+    "name": "Vintage Maroon",
+    "hex": "#4A161F",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c103",
+    "name": "Retro Maroon",
+    "hex": "#631623",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c104",
+    "name": "Vibrant Maroon",
+    "hex": "#7A1324",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c105",
+    "name": "Neon Maroon",
+    "hex": "#861326",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c106",
+    "name": "Muted Maroon",
+    "hex": "#6E2531",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c107",
+    "name": "Earthy Maroon",
+    "hex": "#601925",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c108",
+    "name": "Jewel Maroon",
+    "hex": "#5B121E",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c109",
+    "name": "Warm Maroon",
+    "hex": "#801F2F",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c110",
+    "name": "Summer Maroon",
+    "hex": "#8D2536",
+    "colorTags": [
+      "Maroon"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c111",
+    "name": "Pastel Beige",
+    "hex": "#E7E2D7",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c112",
+    "name": "Vintage Beige",
+    "hex": "#C5B79A",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c113",
+    "name": "Retro Beige",
+    "hex": "#D4C4A5",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c114",
+    "name": "Vibrant Beige",
+    "hex": "#DFCEAC",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c115",
+    "name": "Neon Beige",
+    "hex": "#E3D4B5",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c116",
+    "name": "Muted Beige",
+    "hex": "#D6CDBC",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c117",
+    "name": "Earthy Beige",
+    "hex": "#D1C3A7",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c118",
+    "name": "Jewel Beige",
+    "hex": "#D2BF99",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c119",
+    "name": "Warm Beige",
+    "hex": "#DFD4BF",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c120",
+    "name": "Spring Beige",
+    "hex": "#E5DDCD",
+    "colorTags": [
+      "Beige"
+    ],
+    "typeTags": [
+      "Spring"
+    ]
+  },
+  {
+    "id": "c121",
+    "name": "Pastel Gray",
+    "hex": "#B3B2B2",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c122",
+    "name": "Vintage Gray",
+    "hex": "#545252",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c123",
+    "name": "Retro Gray",
+    "hex": "#706969",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c124",
+    "name": "Vibrant Gray",
+    "hex": "#867979",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c125",
+    "name": "Neon Gray",
+    "hex": "#928787",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c126",
+    "name": "Muted Gray",
+    "hex": "#878585",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c127",
+    "name": "Earthy Gray",
+    "hex": "#6F6A6A",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c128",
+    "name": "Jewel Gray",
+    "hex": "#635C5C",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c129",
+    "name": "Warm Gray",
+    "hex": "#969090",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c130",
+    "name": "Summer Gray",
+    "hex": "#A8A4A4",
+    "colorTags": [
+      "Gray"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c131",
+    "name": "Pastel Black",
+    "hex": "#302F2F",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c132",
+    "name": "Vintage Black",
+    "hex": "#131212",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c133",
+    "name": "Retro Black",
+    "hex": "#1B1919",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c134",
+    "name": "Vibrant Black",
+    "hex": "#211E1E",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c135",
+    "name": "Neon Black",
+    "hex": "#252222",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c136",
+    "name": "Muted Black",
+    "hex": "#222121",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c137",
+    "name": "Earthy Black",
+    "hex": "#1B1919",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c138",
+    "name": "Jewel Black",
+    "hex": "#171616",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c139",
+    "name": "Warm Black",
+    "hex": "#272525",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c140",
+    "name": "Summer Black",
+    "hex": "#2C2A2A",
+    "colorTags": [
+      "Black"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c141",
+    "name": "Pastel White",
+    "hex": "#F7F7F7",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c142",
+    "name": "Vintage White",
+    "hex": "#DEDDDD",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c143",
+    "name": "Retro White",
+    "hex": "#E5E3E3",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c144",
+    "name": "Vibrant White",
+    "hex": "#EAE8E8",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c145",
+    "name": "Neon White",
+    "hex": "#EEECEC",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c146",
+    "name": "Muted White",
+    "hex": "#EBEBEB",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c147",
+    "name": "Earthy White",
+    "hex": "#E5E4E4",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c148",
+    "name": "Jewel White",
+    "hex": "#E2E0E0",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c149",
+    "name": "Warm White",
+    "hex": "#EFEEEE",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c150",
+    "name": "Summer White",
+    "hex": "#F4F3F3",
+    "colorTags": [
+      "White"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c151",
+    "name": "Pastel Gold",
+    "hex": "#DFC57A",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c152",
+    "name": "Vintage Gold",
+    "hex": "#CCA42D",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c153",
+    "name": "Retro Gold",
+    "hex": "#DFB433",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c154",
+    "name": "Vibrant Gold",
+    "hex": "#EDC038",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c155",
+    "name": "Neon Gold",
+    "hex": "#F0C442",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c156",
+    "name": "Muted Gold",
+    "hex": "#D4B557",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c157",
+    "name": "Earthy Gold",
+    "hex": "#DAB238",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c158",
+    "name": "Jewel Gold",
+    "hex": "#E3B322",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c159",
+    "name": "Warm Gold",
+    "hex": "#E3BF55",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c160",
+    "name": "Spring Gold",
+    "hex": "#E3C469",
+    "colorTags": [
+      "Gold"
+    ],
+    "typeTags": [
+      "Spring"
+    ]
+  },
+  {
+    "id": "c161",
+    "name": "Pastel Navy",
+    "hex": "#1F4171",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c162",
+    "name": "Vintage Navy",
+    "hex": "#0F223C",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c163",
+    "name": "Retro Navy",
+    "hex": "#0E2950",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c164",
+    "name": "Vibrant Navy",
+    "hex": "#092E62",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c165",
+    "name": "Neon Navy",
+    "hex": "#09326C",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c166",
+    "name": "Muted Navy",
+    "hex": "#193357",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c167",
+    "name": "Earthy Navy",
+    "hex": "#102A4D",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c168",
+    "name": "Jewel Navy",
+    "hex": "#0A254A",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c169",
+    "name": "Cool Navy",
+    "hex": "#133566",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c170",
+    "name": "Winter Navy",
+    "hex": "#173C70",
+    "colorTags": [
+      "Navy"
+    ],
+    "typeTags": [
+      "Winter"
+    ]
+  },
+  {
+    "id": "c171",
+    "name": "Pastel Olive",
+    "hex": "#99AA49",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c172",
+    "name": "Vintage Olive",
+    "hex": "#5E692A",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c173",
+    "name": "Retro Olive",
+    "hex": "#73812B",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c174",
+    "name": "Vibrant Olive",
+    "hex": "#859827",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c175",
+    "name": "Neon Olive",
+    "hex": "#8FA329",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c176",
+    "name": "Muted Olive",
+    "hex": "#7D893D",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c177",
+    "name": "Earthy Olive",
+    "hex": "#717E2E",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c178",
+    "name": "Jewel Olive",
+    "hex": "#6C7A25",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c179",
+    "name": "Warm Olive",
+    "hex": "#8B9C36",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c180",
+    "name": "Spring Olive",
+    "hex": "#96A83E",
+    "colorTags": [
+      "Olive"
+    ],
+    "typeTags": [
+      "Spring"
+    ]
+  },
+  {
+    "id": "c181",
+    "name": "Pastel Coral",
+    "hex": "#E4A190",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c182",
+    "name": "Vintage Coral",
+    "hex": "#D86B4F",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c183",
+    "name": "Retro Coral",
+    "hex": "#E57457",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c184",
+    "name": "Vibrant Coral",
+    "hex": "#F0795B",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c185",
+    "name": "Neon Coral",
+    "hex": "#F28063",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c186",
+    "name": "Muted Coral",
+    "hex": "#DC8975",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c187",
+    "name": "Earthy Coral",
+    "hex": "#E0765C",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c188",
+    "name": "Jewel Coral",
+    "hex": "#E86A4A",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c189",
+    "name": "Warm Coral",
+    "hex": "#E88A73",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Warm"
+    ]
+  },
+  {
+    "id": "c190",
+    "name": "Summer Coral",
+    "hex": "#E89782",
+    "colorTags": [
+      "Coral"
+    ],
+    "typeTags": [
+      "Summer"
+    ]
+  },
+  {
+    "id": "c191",
+    "name": "Pastel Mint",
+    "hex": "#D5EBE0",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Pastel"
+    ]
+  },
+  {
+    "id": "c192",
+    "name": "Vintage Mint",
+    "hex": "#9FD5BA",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Vintage"
+    ]
+  },
+  {
+    "id": "c193",
+    "name": "Retro Mint",
+    "hex": "#A8E1C4",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Retro"
+    ]
+  },
+  {
+    "id": "c194",
+    "name": "Vibrant Mint",
+    "hex": "#AEEACC",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Vibrant"
+    ]
+  },
+  {
+    "id": "c195",
+    "name": "Neon Mint",
+    "hex": "#B6EDD1",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Neon"
+    ]
+  },
+  {
+    "id": "c196",
+    "name": "Muted Mint",
+    "hex": "#BEDFCF",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Muted"
+    ]
+  },
+  {
+    "id": "c197",
+    "name": "Earthy Mint",
+    "hex": "#ABDEC4",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Earthy"
+    ]
+  },
+  {
+    "id": "c198",
+    "name": "Jewel Mint",
+    "hex": "#9EE1BF",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Jewel"
+    ]
+  },
+  {
+    "id": "c199",
+    "name": "Cool Mint",
+    "hex": "#BFE8D4",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Cool"
+    ]
+  },
+  {
+    "id": "c200",
+    "name": "Spring Mint",
+    "hex": "#CCEBDB",
+    "colorTags": [
+      "Mint"
+    ],
+    "typeTags": [
+      "Spring"
+    ]
+  }
+]
