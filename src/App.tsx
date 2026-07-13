@@ -16,12 +16,14 @@ function App() {
     <>
     <div className="w-screen h-screen flex flex-col">
       <TitleBar />
-      <Router>
-        <Routes>
-          <Route path="/" element={<CollectionPage paletteList={paletteList} setPaletteList={setPaletteList} />} />
-          <Route path="/palettes/:paletteIndex" element={<PalettePage paletteList={paletteList} setPaletteList={setPaletteList}/>} />
-        </Routes>
-      </Router>
+      <div className="flex-1 min-h-0">
+        <Router>
+          <Routes>
+            <Route path="/" element={<CollectionPage paletteList={paletteList} setPaletteList={setPaletteList} />} />
+            <Route path="/palettes/:paletteIndex" element={<PalettePage paletteList={paletteList} setPaletteList={setPaletteList}/>} />
+          </Routes>
+        </Router>
+      </div>
     </div>
     </>
   );

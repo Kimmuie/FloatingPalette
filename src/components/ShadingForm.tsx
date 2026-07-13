@@ -190,7 +190,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
   return (
     <div className="fixed inset-0 z-80 backdrop-blur-xs flex items-center justify-center p-4 animate-popUp">
       <ClickOutside
-        className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-lg w-full [corner-shape:notch] flex flex-col h-fit max-h-[85vh]"
+        className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Quaternary rounded-[2px] shadow-lg max-w-lg w-full [corner-shape:notch] flex flex-col h-fit max-h-[85vh]"
         onOutsideClick={onCancel}>
 
         {/* ---- Header ---- */}
@@ -256,7 +256,7 @@ const ShadingForm = ({ selectedColor, onConfirm, onCancel }: ShadingFormProps) =
           <button
             type="button"
             disabled={selectedKeys.size === 0}
-            className={`${selectedKeys.size > 9 ? "whitespace-normal" : "whitespace-nowrap"} shadowCorner py-1 xs:px-3 px-2 rounded-[2px] border-2 border-custom-black bg-Quaternary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed`}
+            className={`${selectedKeys.size > 9 ? "whitespace-normal" : "whitespace-nowrap"} shadowCorner py-1 xs:px-3 px-2 rounded-[2px] border-2 border-custom-black bg-custom-green [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed`}
             onClick={handleAdd}>
             Add ({selectedKeys.size})
           </button>

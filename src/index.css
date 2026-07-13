@@ -22,6 +22,7 @@ body {
   /* background-blend-mode: screen; */
   background-size: 500px 500px;
   font-family: var(--font-DogicaPixel);
+  overflow: hidden;
 }
 
 
@@ -29,12 +30,13 @@ body {
   --font-DogicaPixel: "DogicaPixel", sans-serif;
   --font-DogicaPixelBold: "DogicaPixelBold", sans-serif;
   --breakpoint-xs: 20rem;
-  --color-Primary: #778873;
-  --color-Secondary: #F1DEC4;
-  --color-Secondary-Dark: #d8c7b0;
-  --color-Tertiary: #BD4444;
-  --color-Tertiary-Dark: #973636;
-  --color-Quaternary: #686D76;
+  --color-Primary: #9D9D9D;          /* Heavy, low-saturation dark slate */
+  --color-Secondary: #fafafa;        /* Off-white cloth texture tone */
+  --color-Secondary-Dark: #bdae99;   /* Darker aged paper shadow */
+  --color-Tertiary: #9e3838;         /* Dull vintage book-spine red */
+  --color-Tertiary-Dark: #6e2424;    /* Dried rosebud shadow */
+  --color-Quaternary: #DDDDDD;       /* Soft concrete tint */
+  --color-custom-green: #627a57;     /* Muted camouflage green */
   --color-custom-black: #0F0E0E;
   --color-custom-gray: #686D76;
 
@@ -91,9 +93,19 @@ body {
 }
 
 /* Track */
-.scrollbar-contents::-webkit-scrollbar-track {
-  border: 0px
+
+.scrollbar-palette::-webkit-scrollbar-track {
+  padding-left: calc(var(--spacing) * 2);
+  border: 2px solid var(--color-custom-black);
 }
+
+.scrollbar-palette::-webkit-scrollbar-thumb {
+  border: 2px solid var(--color-custom-black);
+}
+
+/* .scrollbar-contents::-webkit-scrollbar-track {
+  border: 0px
+} */
 ::-webkit-scrollbar-track {
   background: var(--color-Secondary);
   border-left: 2px solid var(--color-custom-black);

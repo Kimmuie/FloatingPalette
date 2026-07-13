@@ -5,7 +5,7 @@ import PixelOutline from "../components/PixelOutline";
 import ColorForm from "../components/ColorForm";
 import ShadingForm from "../components/ShadingForm";
 import StyleForm from "../components/StyleForm";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface PalettePageProps {
   paletteList: Palette[];
@@ -25,6 +25,8 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   const [selectShadingIndex, setSelectShadingIndex] = useState<number | null>(null);
   const dragIndex = useRef<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
   const { paletteIndex } = useParams();
   const navigate = useNavigate();
@@ -148,6 +150,22 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
     setDragOverIndex(null);
   };
 
+  useEffect(() => {
+  const el = scrollRef.current;
+  if (!el) return;
+
+  const checkOverflow = () => {
+    setHasOverflow(el.scrollHeight > el.clientHeight);
+  };
+
+  checkOverflow();
+
+  const observer = new ResizeObserver(checkOverflow);
+  observer.observe(el);
+
+  return () => observer.disconnect();
+}, [palette.colors.length]);
+
   if (!palette) {
     return (
       <div className="px-2 py-2 bg-Secondary rounded-[2px] shadowCorner border-b-2 border-x-2 border-custom-black [corner-shape:notch] h-full flex flex-col items-center justify-center gap-3">
@@ -167,8 +185,8 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   const inPickerMode = colorShading || changeStyle || selectMode;
 
   return (
-    <div className="px-2 py-2 bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] h-full flex flex-col gap-2 justify-between">
-      <div className="flex flex-col gap-2">
+    <div className="px-2 py-2 bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] h-full flex flex-col gap-2">
+      <div className="flex flex-col gap-2 flex-1 min-h-0">
         <div className={`flex items-center ${inPickerMode ? "justify-center" : "justify-between"}`}>
           {!inPickerMode && (
             <PixelOutline
@@ -204,7 +222,9 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
               Select All
             </PixelOutline>
         )}
-        <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3">
+        <div 
+          ref={scrollRef}
+          className={`py-1 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 overflow-y-auto scrollbar-palette ${hasOverflow ? "pr-2" : ""}`}>
           {palette.colors.map((color, colorIndex) => {
             const isSelected = selectedIndices.has(colorIndex);
             return (
@@ -229,7 +249,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
                 }}
                 key={colorIndex}
                 className={` hover:-translate-y-0.5 active:translate-y-0.5 flex flex-col w-full items-center gap-1 p-2 rounded-[2px] border-2 [corner-shape:notch] border-custom-black shadowCorner transition-colors
-                  ${isSelected ? "bg-Tertiary" : "bg-Quaternary"}
+                  ${isSelected ? "bg-Primary" : "bg-Quaternary"}
                   ${selectMode || changeStyle ? "cursor-grab active:cursor-grabbing" : " cursor-pointer"}
                   ${dragOverIndex === colorIndex ? "outline-1.5 outline-dashed outline-Tertiary" : ""}`}
               >
@@ -258,7 +278,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
           })}
         </div>
       </div>
-
+    <div className="flex-shrink-0">
       {selectMode || inPickerMode ? (
         <>
           {selectMode && (
@@ -297,7 +317,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
               <PixelOutline
                 as="button"
                 disabled={selectedIndices.size === 0}
-                className="bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-custom-green hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer py-1 px-3 w-full h-full disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={openStyleForm}>
                 Restyle ({selectedIndices.size})
               </PixelOutline>
@@ -328,6 +348,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
           </PixelOutline>
         </div>
       )}
+      </div>
 
       {editingColorIndex !== null && (
         <ColorForm
@@ -350,8 +371,8 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
         <ColorForm
           mode="pick"
           onConfirm={handleAddColorConfirm}
-          onCancel={() => setColorPick(false)}
-        />
+           onCancel={() => setColorPick(false)}
+         />
       )}
       {selectShadingIndex !== null && (
         <ShadingForm

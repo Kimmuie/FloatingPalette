@@ -439,7 +439,7 @@ const ColorForm = ({
   return (
     <div className="fixed inset-0 z-80 backdrop-blur-xs flex items-center justify-center p-4 animate-popUp">
       <ClickOutside
-        className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg w-fit [corner-shape:notch] flex flex-col h-fit"
+        className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Quaternary rounded-[2px] shadow-lg w-fit [corner-shape:notch] flex flex-col h-fit"
         onOutsideClick={onCancel}>
         <div className="flex flex-col w-full h-full gap-2 px-2">
           <div className="flex flex-row justify-between items-center h-full p-3 gap-3">
@@ -626,7 +626,7 @@ const ColorForm = ({
             Cancel
           </button>
           <button
-            className="shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-Quaternary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5"
+            className="shadowCorner py-1 px-3 rounded-[2px] border-2 border-custom-black bg-custom-green [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5"
             onClick={handleSave}>
             {confirmLabel}
           </button>
