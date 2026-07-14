@@ -11,7 +11,7 @@ const CreateNew = ({ onConfirm, onCancel }: CreateNewProps) => {
 
   const handleCreate = () => {
     const trimmed = name.trim();
-    onConfirm(trimmed || "My Pallete");
+    onConfirm(trimmed || "My Palette");
   };
 
   return (

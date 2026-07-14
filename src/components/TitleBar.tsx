@@ -28,7 +28,7 @@ export default function TitleBar() {
       <div className="flex gap-2">
         <PixelOutline  
         as="button"
-        className="hover:bg-Secondary-Dark hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer w-6 h-6 bg-Secondary flex items-center justify-center"
+        className="hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer w-6 h-6 bg-Secondary flex items-center justify-center"
         onClick={togglePin}>
             
           <img
@@ -39,7 +39,7 @@ export default function TitleBar() {
 
         <PixelOutline 
         as="button"
-        className="hover:bg-Secondary-Dark hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer w-6 h-6 bg-Secondary flex items-center justify-center"
+        className="hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer w-6 h-6 bg-Secondary flex items-center justify-center"
         onClick={() => appWindow.minimize()}>
           -
         </PixelOutline>

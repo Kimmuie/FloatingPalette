@@ -1,6 +1,6 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "FloatingPallete",
+  "productName": "FloatingPalette",
   "version": "0.1.0",
   "identifier": "com.floatingpalette.app",
   "build": {
@@ -13,7 +13,7 @@
     "windows": [
       {
         "dragDropEnabled": false,
-        "title": "FloatingPallete",
+        "title": "FloatingPalette",
         "decorations": false,
         "resizable": true,
         "width": 290,
