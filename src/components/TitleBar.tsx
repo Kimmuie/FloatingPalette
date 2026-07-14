@@ -21,8 +21,10 @@ export default function TitleBar() {
       data-tauri-drag-region
       className="z-85 w-full rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] h-10 bg-Tertiary flex flex-row items-center justify-between px-2"
     >
-      <span className="pointer-events-none whitespace-nowrap truncate">🎨 FloatingPalette</span>
-
+      <div className="pointer-events-none flex flex-row items-center gap-2 flex-1 min-w-0">
+        <img src="/img/iconFP.png" className="w-6 h-6 shrink-0"/>
+        <span className="whitespace-nowrap truncate w-full">FloatingPalette</span>
+      </div>
       <div className="flex gap-2">
         <PixelOutline  
         as="button"
@@ -30,7 +32,7 @@ export default function TitleBar() {
         onClick={togglePin}>
             
           <img
-            src={pinned ? "/img/iconPinned.png" : "/img/iconPin.png"}
+            src={pinned ? "/svg/iconPinned.svg" : "/svg/iconPin.svg"}
             className="p-0.5"
           />
         </PixelOutline>

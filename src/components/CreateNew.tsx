@@ -17,13 +17,13 @@ const CreateNew = ({ onConfirm, onCancel }: CreateNewProps) => {
   return (
     <div className="fixed inset-0  z-80 backdrop-blur-xs flex items-center justify-center p-4 animate-popUp">
       <ClickOutside
-        className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-sm w-full [corner-shape:notch] flex flex-col h-fit "
+        className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Quaternary rounded-[2px] shadow-lg max-w-sm w-full [corner-shape:notch] flex flex-col h-fit "
         onOutsideClick={onCancel}>
         <div className="px-2">
-            <div className="flex flex-row justify-start items-center h-full p-3 gap-3">
-            <img src="/svg/iconAdd.svg" className="w-8 h-8" />
-            <h3 className="text-lg">
-                Create New Palette
+            <div className="flex flex-row justify-start items-center h-full p-1 py-3 xs:p-3 gap-3">
+            <img src="/svg/iconAdd.svg" className="w-6 h-6" />
+            <h3 className="text-sm xs:text-base sm:text-lg">
+                New Palette
             </h3>
             </div>
             <input
@@ -32,7 +32,7 @@ const CreateNew = ({ onConfirm, onCancel }: CreateNewProps) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleCreate()}
-            placeholder="Enter Palette Name ..."
+            placeholder="Enter Name ..."
             className="outline-none bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] py-2 px-1 w-full"
             />
         </div>

@@ -442,10 +442,10 @@ const ColorForm = ({
         className="animate-popUp border-Primary-4 gap-2 border-2 border-custom-black shadowCorner bg-Quaternary rounded-[2px] shadow-lg w-fit [corner-shape:notch] flex flex-col h-fit"
         onOutsideClick={onCancel}>
         <div className="flex flex-col w-full h-full gap-2 px-2">
-          <div className="flex flex-row justify-between items-center h-full p-3 gap-3">
-            <div className="flex flex-row gap-2">
-              <img src={icon} className="w-8 h-8" />
-              <h3 className="text-lg">{title}</h3>
+          <div className="flex flex-row justify-between items-center h-full p-1 py-3 xs:p-3 gap-3">
+            <div className="flex flex-row gap-2 xs:gap-4 items-center">
+              <img src={icon} className="w-6 h-6" />
+              <h3 className="text-sm xs:text-base sm:text-lg">{title}</h3>
             </div>
             {dropperSupported && (
               <button
@@ -453,8 +453,8 @@ const ColorForm = ({
                 onClick={handleEyedropper}
                 disabled={isDropping}
                 title="Pick color from screen (approximate — may run bright on HDR displays)"
-                className="shadowCorner w-10 h-10 shrink-0 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
-                <img src="/svg/iconDropper.svg" className="w-5 h-5" />
+                className="shadowCorner w-6 xs:w-8 h-6 xs:h-8 shrink-0 rounded-[2px] border-2 border-custom-black bg-Tertiary [corner-shape:notch] cursor-pointer hover:-translate-y-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                <img src="/svg/iconDropper.svg" className="p-0.5 xs:p-1" />
               </button>
             )}
           </div>

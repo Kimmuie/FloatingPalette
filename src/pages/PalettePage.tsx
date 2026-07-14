@@ -223,6 +223,9 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
             Select All
           </PixelOutline>
         )}
+        {palette.colors.length == 0 ? (
+          <span className="flex-1 flex justify-center items-center h-full">Empty Palette</span>
+        ):(
         <div
           ref={scrollRef}
           className={`py-1 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 overflow-y-auto scrollbar-palette ${hasOverflow ? "pr-2" : ""}`}>
@@ -280,6 +283,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
             );
           })}
         </div>
+        )}
       </div>
       <div className="flex-shrink-0">
         {selectMode || inPickerMode ? (

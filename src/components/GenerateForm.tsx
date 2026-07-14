@@ -109,9 +109,9 @@ const GenerateForm = ({ onConfirm, onCancel }: GenerateFormProps) => {
       <ClickOutside
         className="animate-popUp border-Primary-4 border-2 border-custom-black shadowCorner bg-Primary rounded-[2px] shadow-lg max-w-md w-full [corner-shape:notch] flex flex-col h-fit max-h-[85vh]"
         onOutsideClick={onCancel}>
-        <div className="flex flex-row justify-start items-center h-full p-3 gap-3">
-          <img src="/svg/iconAdd.svg" className="w-8 h-8" />
-          <h3 className="text-lg">Generate Palette</h3>
+        <div className="flex flex-row justify-start items-center h-full pl-3 p-0 py-3 xs:p-3 gap-3">
+          <img src="/svg/iconAdd.svg" className="w-6 h-6" />
+          <h3 className="text-sm xs:text-base sm:text-lg ">Generate Palette</h3>
         </div>
 
         <div className="px-3 flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-2">
@@ -119,7 +119,7 @@ const GenerateForm = ({ onConfirm, onCancel }: GenerateFormProps) => {
             type="text"
             value={paletteName}
             onChange={(e) => setPaletteName(e.target.value)}
-            placeholder="Enter Palette Name ..."
+            placeholder="Enter Name ..."
             className="outline-none bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] py-2 px-1 w-full"
           />
           {renderTagGroup("Color", COLOR_TAGS, selectedColorTags, setSelectedColorTags)}

@@ -85,6 +85,9 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
                 Generate Palette
             </PixelOutline>
         </div>
+        {paletteList.length == 0 ? (
+          <span className="flex-1 flex justify-center items-center h-full">Empty Collection</span>
+        ):(
         <div 
             ref={scrollRef}
             className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden scrollbar-palette w-full">
@@ -114,7 +117,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
                         <>
                         <h2 className="break-all">{palette.paletteName}</h2>
                         <div className="flex gap-2">
-                          <PixelOutline className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointerflex items-center justify-center p-1"
+                          <PixelOutline className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center p-1"
                             onClick={() => handleEditStart(index)}>
                             <img src="/svg/iconEdit.svg" />
                           </PixelOutline>
@@ -148,6 +151,7 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
               ))}
           </div>
         </div>
+        )}
         <div className="flex justify-end flex-shrink-0 w-full">
           <PixelOutline className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer flex items-center justify-center p-1"
             onClick={() => setOpenSetting(true)}>
