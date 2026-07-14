@@ -6,6 +6,14 @@ import PixelOutline from "./PixelOutline";
 
 const appWindow = getCurrentWindow();
 
+declare global {
+  interface Window {
+    EyeDropper?: new () => {
+      open: () => Promise<{ sRGBHex: string }>;
+    };
+  }
+}
+
 interface ColorFormProps {
   mode: "add" | "edit" | "pick";
   initialName?: string;
@@ -273,6 +281,9 @@ const ColorForm = ({
     if (!dropperSupported || isDropping) return;
     setIsDropping(true);
     try {
+      if (!window.EyeDropper) {
+        return;
+      }
       const eyeDropper = new window.EyeDropper();
       const result = await eyeDropper.open();
       const { r, g, b } = hexToRgb(result.sRGBHex);
@@ -613,8 +624,8 @@ const ColorForm = ({
             type="text"
             autoFocus
             value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSave()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSave()}
             placeholder="Enter Color Name ..."
             className="outline-none bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] py-2 px-1 w-full"
           />

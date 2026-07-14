@@ -140,7 +140,7 @@ const STYLES: StyleDefinition[] = [
     id: "neon",
     label: "Neon",
     description: "Vivid, glowing tones — saturation maxed out, lightness tuned for punch.",
-    generate: (h, s, l) => {
+    generate: (h,  l) => {
       const hues = [h, h + 30, h - 30, h + 150];
       return hues.map((hh, i) => hslToHex(hh, 95, i === 0 ? clamp(l, 50, 62) : 55));
     },
@@ -171,7 +171,7 @@ const STYLES: StyleDefinition[] = [
     id: "cyberpunk",
     label: "Cyberpunk",
     description: "High-contrast electric tones — magenta/cyan bias against near-black.",
-    generate: (h, s, l) => {
+    generate: (h, s) => {
       const magenta = 320;
       const cyan = 185;
       return [

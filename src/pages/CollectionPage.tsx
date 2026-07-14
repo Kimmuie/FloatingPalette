@@ -65,7 +65,8 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
     name: string,
     colors: { name: string; hexValue: string }[]
   ) => {
-    setPaletteList((prev) => [...prev, { paletteName: name, colors }]);
+    const mappedColors = colors.map((c) => ({ colorName: c.name, hexValue: c.hexValue }));
+    setPaletteList((prev) => [...prev, { paletteName: name, colors: mappedColors }]);
     setShowGenerate(false);
   };
 
@@ -105,8 +106,8 @@ export default function CollectionPage({ paletteList, setPaletteList }: Collecti
                           autoFocus
                           className="outline-none bg-Secondary rounded-[2px] shadowCorner border-2 border-custom-black [corner-shape:notch] py-2 px-1 w-full"
                           value={editingPaletteName}
-                          onChange={(e) => setEditingPaletteName(e.target.value)}
-                          onKeyDown={(e) => e.key === "Enter" && handleEditSave(index)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditingPaletteName(e.target.value)}
+                          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleEditSave(index)}
                         />
                         <PixelOutline className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer  flex items-center justify-center p-1"
                           onClick={() => handleEditSave(index)}>

@@ -1,4 +1,5 @@
-import { useEffect, useRef, ReactNode, RefObject, CSSProperties } from "react";
+import { useEffect, useRef } from "react";
+import type { ReactNode, RefObject, CSSProperties } from "react";
 
 interface ClickOutsideProps {
   children: ReactNode;

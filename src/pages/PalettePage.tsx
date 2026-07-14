@@ -28,6 +28,8 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
   const dragIndex = useRef<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const autoScrollSpeed = useRef(0);
+  const autoScrollFrame = useRef<number | null>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
 
   const { paletteIndex } = useParams();
@@ -135,6 +137,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
 
   const handleDrop = (e: React.DragEvent, dropIndex: number) => {
     e.preventDefault();
+    stopAutoScroll();
     const from = dragIndex.current;
     if (from === null || from === dropIndex) {
       dragIndex.current = null;
@@ -150,6 +153,52 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
     dragIndex.current = null;
     setDragOverIndex(null);
   };
+
+  const stopAutoScroll = () => {
+  if (autoScrollFrame.current !== null) {
+    cancelAnimationFrame(autoScrollFrame.current);
+    autoScrollFrame.current = null;
+  }
+  autoScrollSpeed.current = 0;
+};
+
+const startAutoScroll = () => {
+  if (autoScrollFrame.current !== null) return;
+  const step = () => {
+    const el = scrollRef.current;
+    if (el && autoScrollSpeed.current !== 0) {
+      el.scrollTop += autoScrollSpeed.current;
+      autoScrollFrame.current = requestAnimationFrame(step);
+    } else {
+      autoScrollFrame.current = null;
+    }
+  };
+  autoScrollFrame.current = requestAnimationFrame(step);
+};
+
+const handleContainerDragOver = (e: React.DragEvent) => {
+  const el = scrollRef.current;
+  if (!el || !hasOverflow) return;
+
+  const rect = el.getBoundingClientRect();
+  const threshold = 60; // px from edge that triggers scrolling
+  const maxSpeed = 14;
+
+  let speed = 0;
+  if (e.clientY < rect.top + threshold) {
+    speed = -maxSpeed * ((rect.top + threshold - e.clientY) / threshold);
+  } else if (e.clientY > rect.bottom - threshold) {
+    speed = maxSpeed * ((e.clientY - (rect.bottom - threshold)) / threshold);
+  }
+
+  autoScrollSpeed.current = speed;
+  if (speed !== 0) startAutoScroll();
+};
+
+useEffect(() => {
+  window.addEventListener("dragend", stopAutoScroll);
+  return () => window.removeEventListener("dragend", stopAutoScroll);
+}, []);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -228,6 +277,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
         ):(
         <div
           ref={scrollRef}
+          onDragOver={handleContainerDragOver}
           className={`py-1 grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 overflow-y-auto scrollbar-palette ${hasOverflow ? "pr-2" : ""}`}>
           {palette.colors.map((color, colorIndex) => {
             const isSelected = selectedIndices.has(colorIndex);
@@ -237,9 +287,9 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
                 role="button"
                 tabIndex={0}
                 draggable
-                onDragStart={(e) => handleDragStart(e, colorIndex)}
-                onDragOver={(e) => handleDragOver(e, colorIndex)}
-                onDrop={(e) => handleDrop(e, colorIndex)}
+                onDragStart={(e: React.DragEvent<HTMLDivElement>) => handleDragStart(e, colorIndex)}
+                onDragOver={(e: React.DragEvent<HTMLDivElement>) => handleDragOver(e, colorIndex)}
+                onDrop={(e: React.DragEvent<HTMLDivElement>) => handleDrop(e, colorIndex)}
                 onClick={() => {
                   if (selectMode) {
                     toggleSelectColor(colorIndex);
@@ -265,7 +315,7 @@ export default function PalettePage({ paletteList, setPaletteList }: PalettePage
                   {selectMode && (
                     <PixelOutline
                       className="w-8 h-8 bg-Primary hover:-translate-y-0.5 active:translate-y-0.5 rounded-[2px] shadowCorner border-2 [corner-shape:notch] border-custom-black cursor-pointer bg-Secondary flex items-center justify-center p-1"
-                      onClick={(e) => {
+                      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                         e.stopPropagation();
                         setEditingColorIndex(colorIndex);
                       }}>
