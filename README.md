@@ -46,10 +46,31 @@ https://github.com/Kimmuie/FloatingPalette/releases
 
 ## 🖥 Built With
 
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=react,tailwind,tauri" />
-  </a>
-  
+  <table>
+  <tr align="center">
+    <td>
+      <a href="https://react.dev" title="React">
+        <img src="https://skillicons.dev/icons?i=react" width="48" alt="React" />
+      </a>
+    </td>
+    <td>
+      <a href="https://tailwindcss.com" title="Tailwind">
+        <img src="https://skillicons.dev/icons?i=tailwind" width="48" alt="Tailwind" />
+      </a>
+    </td>
+    <td>
+      <a href="https://tauri.app" title="Tauri">
+        <img src="https://skillicons.dev/icons?i=tauri" width="48" alt="Tauri" />
+      </a>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>React</td>
+    <td>Tailwind CSS</td>
+    <td>Tauri</td>
+  </tr>
+</table>
+
 ## 📸 Screenshots
 
 <table>
