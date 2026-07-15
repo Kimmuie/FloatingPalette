@@ -48,17 +48,17 @@ https://github.com/Kimmuie/FloatingPalette/releases
 
   <table>
   <tr align="center">
-    <td>
+    <td width="100">
       <a href="https://react.dev" title="React">
         <img src="https://skillicons.dev/icons?i=react" width="48" alt="React" />
       </a>
     </td>
-    <td>
+    <td width="100">
       <a href="https://tailwindcss.com" title="Tailwind">
         <img src="https://skillicons.dev/icons?i=tailwind" width="48" alt="Tailwind" />
       </a>
     </td>
-    <td>
+    <td width="100">
       <a href="https://tauri.app" title="Tauri">
         <img src="https://skillicons.dev/icons?i=tauri" width="48" alt="Tauri" />
       </a>
