@@ -2,7 +2,7 @@
 
 <p align="center">
   <div>
-    <img src="./docs/logoBanner.jpg"  title="Logo" />
+    <img src="./docs/logoBanner.jpg"  title="Logo" width="100%"/>
   </div>
 </p>
 
@@ -55,25 +55,25 @@ https://github.com/Kimmuie/FloatingPalette/releases
 <table>
 <tr>
 <td align="center">
-<img src="./docs/paletteGenerator.jpg" width="100%">
+<img src="./docs/paletteGenerator.png" width="100%">
 <br><b>Palette Generator</b>
 </td>
 
 <td align="center">
-<img src="./docs/shadeColor.jpg" width="100%">
+<img src="./docs/shadeColor.png" width="100%">
 <br><b>Shading Colors</b>
 </td>
 
 <td align="center">
-<img src="./docs/restyleColors.jpg" width="100%">
+<img src="./docs/restyleColors.png" width="100%">
 <br><b>Restyle Colors</b>
 </td>
 </tr>
 </table>
 
   <div>
-    <img src="./docs/UI1.jpg"  title="UI" height="210"/>
-    <img src="./docs/UI2.jpg"  title="UI" height="210"/>
+    <img src="./docs/UI1.png"  title="UI" height="210"/>
+    <img src="./docs/UI2.png"  title="UI" height="210"/>
   </div>
   
 ---
