@@ -2,7 +2,7 @@
 
 <p align="center">
   <div>
-    <img src="./docs/logoBanner.jpg"  title="Logo" />
+    <img src="./docs/logoBanner.jpg"  title="Logo" width="100%"/>
   </div>
 </p>
 
@@ -13,13 +13,13 @@
 </p>
 
 
-# ✨ Overview
+## ✨ Overview
 
 FloatingPalette is a lightweight desktop utility built for designers, developers, pixel artists, UI/UX designers, and anyone who works with colors every day.
 
 Instead of constantly switching between design software, browsers, or code editors just to grab a color, FloatingPalette keeps everything within reach. Pin your favorite palettes to your desktop, generate beautiful color schemes, extract colors from images or your screen, and instantly explore shades and alternative themes all from one lightweight application.
 
-# 🚀 Features
+## 🚀 Features
 
 | Feature | Description |
 |---|---|
@@ -44,53 +44,57 @@ Download the latest installer from the Releases page.
 
 https://github.com/Kimmuie/FloatingPalette/releases
 
-# 🖥 Built With
+## 🖥 Built With
 
   <a href="https://skillicons.dev">
     <img src="https://skillicons.dev/icons?i=react,tailwind,tauri" />
   </a>
   
-# 📸 Screenshots
+## 📸 Screenshots
 
 <table>
 <tr>
 <td align="center">
-<img src="./docs/paletteGenerator.jpg" width="100%">
+<img src="./docs/paletteGenerator.png" width="100%">
 <br><b>Palette Generator</b>
 </td>
 
 <td align="center">
-<img src="./docs/shadeColor.jpg" width="100%">
+<img src="./docs/shadeColor.png" width="100%">
 <br><b>Shading Colors</b>
 </td>
 
 <td align="center">
-<img src="./docs/restyleColors.jpg" width="100%">
+<img src="./docs/restyleColors.png" width="100%">
 <br><b>Restyle Colors</b>
 </td>
 </tr>
 </table>
 
-  <div>
-    <img src="./docs/UI1.jpg"  title="UI" height="210"/>
-    <img src="./docs/UI2.jpg"  title="UI" height="210"/>
-  </div>
-  
----
+<table>
+<tr>
+<td align="center">
+    <img src="./docs/UI1.png"  title="UI" width="100%"/>
+</td>
+<td align="center">
+    <img src="./docs/UI2.png"  title="UI" width="100%"/>
+</td>
+</tr>
+</table>
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions, feature requests, and bug reports are always welcome.
 
 If you have an idea that can improve FloatingPalette, feel free to open an issue or submit a pull request.
 
-# ⭐ Support
+## ⭐ Support
 
 If you enjoy FloatingPalette, consider giving this repository a ⭐.
 
 It helps more people discover the project and supports future development.
 
-# 📄 License
+## 📄 License
 
 This project is licensed under the MIT License.
 
