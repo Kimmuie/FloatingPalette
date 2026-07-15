@@ -66,7 +66,7 @@ https://github.com/Kimmuie/FloatingPalette/releases
   </tr>
   <tr align="center">
     <td>React</td>
-    <td>Tailwind CSS</td>
+    <td>Tailwind</td>
     <td>Tauri</td>
   </tr>
 </table>
