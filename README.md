@@ -71,12 +71,16 @@ https://github.com/Kimmuie/FloatingPalette/releases
 </tr>
 </table>
 
-  <div>
-    <img src="./docs/UI1.png"  title="UI" height="210"/>
-    <img src="./docs/UI2.png"  title="UI" height="210"/>
-  </div>
-  
----
+<table>
+<tr>
+<td align="center">
+    <img src="./docs/UI1.png"  title="UI" width="100%"/>
+</td>
+<td align="center">
+    <img src="./docs/UI2.png"  title="UI" width="100%"/>
+</td>
+</tr>
+</table>
 
 # 🤝 Contributing
 
