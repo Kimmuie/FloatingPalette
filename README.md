@@ -13,13 +13,13 @@
 </p>
 
 
-# ✨ Overview
+## ✨ Overview
 
 FloatingPalette is a lightweight desktop utility built for designers, developers, pixel artists, UI/UX designers, and anyone who works with colors every day.
 
 Instead of constantly switching between design software, browsers, or code editors just to grab a color, FloatingPalette keeps everything within reach. Pin your favorite palettes to your desktop, generate beautiful color schemes, extract colors from images or your screen, and instantly explore shades and alternative themes all from one lightweight application.
 
-# 🚀 Features
+## 🚀 Features
 
 | Feature | Description |
 |---|---|
@@ -44,13 +44,13 @@ Download the latest installer from the Releases page.
 
 https://github.com/Kimmuie/FloatingPalette/releases
 
-# 🖥 Built With
+## 🖥 Built With
 
   <a href="https://skillicons.dev">
     <img src="https://skillicons.dev/icons?i=react,tailwind,tauri" />
   </a>
   
-# 📸 Screenshots
+## 📸 Screenshots
 
 <table>
 <tr>
@@ -82,19 +82,19 @@ https://github.com/Kimmuie/FloatingPalette/releases
 </tr>
 </table>
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions, feature requests, and bug reports are always welcome.
 
 If you have an idea that can improve FloatingPalette, feel free to open an issue or submit a pull request.
 
-# ⭐ Support
+## ⭐ Support
 
 If you enjoy FloatingPalette, consider giving this repository a ⭐.
 
 It helps more people discover the project and supports future development.
 
-# 📄 License
+## 📄 License
 
 This project is licensed under the MIT License.
 
